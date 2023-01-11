@@ -8,8 +8,10 @@ type HeaderProps = {
 
 const Header = ({ children, testid }: HeaderProps) => {
     return (
-      <header className="sticky p-3" data-testid={testid}>
-        {children}
+      <header className="sticky shadow-md h-[72px]" data-testid={testid}>
+        <div className="container">
+          {children}
+        </div>
       </header>
     );
 }
