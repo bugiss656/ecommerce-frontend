@@ -1,5 +1,4 @@
 import Header from "../components/Header/Header"
-import Flex from "../components/Flex/Flex"
 import Logo from "../components/Logo/Logo"
 import SearchBar from "../components/SearchBar/SearchBar"
 import Input from "../components/Input/Input"
@@ -19,39 +18,40 @@ const Homepage = () => {
     return (
       <div className="">
         <Header>
-          <Flex className="flex flex-row justify-between content-center">
-            <Flex className="flex flex-row items-center">
+          <div className="flex flex-row justify-between content-center">
+            <div className="flex flex-row items-center">
               <Link to="/">
                 <Logo src={logo} alt="" />
               </Link>
               <SearchBar>
                 <Input type="text" placeholder="Czego szukasz?" value="" />
               </SearchBar>
-            </Flex>
+            </div>
 
             <Menu>
-              <Flex className="flex flex-row items-center">
-                <MenuItem
-                  link="#"
-                  icon={<BsHeadset />} 
-                  text="Kontakt" 
-                />
-                <MenuItem 
-                  link="#"
-                  icon={<BsPerson />} 
-                  text="Twoje konto" 
-                />
-                <MenuItem 
-                  link="#"
-                  icon={<BsCart3 />} 
-                  text="Koszyk" 
-                />
-              </Flex>
+              <MenuItem
+                link="#"
+                icon={<BsHeadset size={21} />} 
+                text="Kontakt"
+                dropdown={true}
+              />
+              <MenuItem 
+                link="#"
+                icon={<BsPerson size={21} />} 
+                text="Twoje konto"
+                dropdown={true} 
+              />
+              <MenuItem 
+                link="#"
+                icon={<BsCart3 size={21} />} 
+                text="Koszyk"
+                dropdown={true} 
+              />
             </Menu>
-          </Flex>
+          </div>
         </Header>
       </div>
-    );
+    )
 }
 
 export default Homepage

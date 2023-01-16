@@ -1,26 +1,55 @@
-import { IconContext } from "react-icons"
+import { useState } from 'react'
 
+import Dropdown from '../Dropdown/Dropdown'
 import { Link } from "react-router-dom"
-import Flex from "../Flex/Flex"
 
 
 type MenuItemProps = {
     link: string,
-    icon: React.ReactElement,
-    text: string
+    icon: React.ReactNode,
+    text: string,
+    dropdown: boolean,
 }
 
 
-const MenuItem = ({ link, icon, text }: MenuItemProps) => {
+const MenuItem = ({ link, icon, text, dropdown }: MenuItemProps) => { 
+    const [isHovered, setIsHovered] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
+
     return (
-        <Link to={link} className="h-[66px] hover:shadow-md hover:rounded">
-            <Flex className="flex flex-col items-center px-4 py-4">
-                <IconContext.Provider value={{ style: { width: '22px', height: 'auto', paddingBottom: '2px' } }}>
-                    {icon}
-                </IconContext.Provider> 
-                <div className="text-sm">{text}</div>
-            </Flex>
+      <div 
+        className="relative" 
+        onMouseEnter={() => {
+          setIsHovered(true)
+          setIsOpen(true)
+        }}
+        onMouseLeave={() => {
+          setIsHovered(false)
+          setIsOpen(false)
+        }}
+      >
+        <Link
+          to={link}
+          className={`flex flex-col items-center w-24 px-4 py-3 ${isHovered ? 'shadow-[0_-1px_3px_0_rgba(0,0,0,0.2)] rounded-t-md' : ''}`}
+        > 
+            {icon}
+            <div className="text-[11px]">{text}</div>
         </Link>
+        {dropdown 
+            ?
+                <Dropdown 
+                  isOpen={isOpen}
+                >
+                    <ul>
+                        <li>One</li>
+                        <li>Two</li>
+                        <li>Three</li>
+                    </ul>
+                </Dropdown>
+            :
+                null
+        }
+      </div>
     )
 }
 
