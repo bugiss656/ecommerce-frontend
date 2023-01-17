@@ -4,6 +4,9 @@ import SearchBar from "../components/SearchBar/SearchBar"
 import Input from "../components/Input/Input"
 import Menu from "../components/Menu/Menu"
 import MenuItem from "../components/Menu/MenuItem"
+import Navigation from "../components/Navigation/Navigation"
+import NavigationList from "../components/Navigation/NavigationList"
+import NavigationItem from "../components/Navigation/NavigationItem"
 import { Link } from "react-router-dom"
 
 import logo from '../media/logo.png'
@@ -16,9 +19,9 @@ import {
 
 const Homepage = () => {
     return (
-      <div className="">
+      <>
         <Header>
-          <div className="flex flex-row justify-between content-center">
+          <div className="container flex flex-row justify-between content-center py-[5px]">
             <div className="flex flex-row items-center">
               <Link to="/">
                 <Logo src={logo} alt="" />
@@ -49,8 +52,34 @@ const Homepage = () => {
               />
             </Menu>
           </div>
+          <Navigation>
+            <div className="container">
+              <NavigationList>
+                <NavigationItem 
+                  href="#"
+                  text="Kategoria 1"
+                  dropdown={true}
+                />
+                <NavigationItem 
+                  href="#"
+                  text="Kategoria 2"
+                  dropdown={true}
+                />
+                <NavigationItem 
+                  href="#"
+                  text="Kategoria 3"
+                  dropdown={true}
+                />
+                <NavigationItem 
+                  href="#"
+                  text="Kategoria 4"
+                  dropdown={true}
+                />
+              </NavigationList>
+            </div>
+          </Navigation>
         </Header>
-      </div>
+      </>
     )
 }
 
