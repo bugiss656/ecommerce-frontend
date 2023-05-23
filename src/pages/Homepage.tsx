@@ -37,18 +37,39 @@ const Homepage = () => {
                 icon={<BsHeadset size={21} />} 
                 text="Kontakt"
                 dropdown={true}
+                children={
+                  <ul>
+                    <li>One</li>
+                    <li>Two</li>
+                    <li>Three</li>
+                  </ul>
+                }
               />
               <MenuItem 
                 link="#"
                 icon={<BsPerson size={21} />} 
                 text="Twoje konto"
                 dropdown={true} 
+                children={
+                  <ul>
+                    <li>Twoje konto</li>
+                    <li>Zamówienia</li>
+                    <li>Ustawienia konta</li>
+                  </ul>
+                }
               />
               <MenuItem 
                 link="#"
                 icon={<BsCart3 size={21} />} 
                 text="Koszyk"
                 dropdown={true} 
+                children={
+                  <ul>
+                    <li>One</li>
+                    <li>Two</li>
+                    <li>Three</li>
+                  </ul>
+                }
               />
             </Menu>
           </div>

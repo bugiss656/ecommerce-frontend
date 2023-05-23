@@ -9,10 +9,11 @@ type MenuItemProps = {
     icon: React.ReactNode,
     text: string,
     dropdown: boolean,
+    children: React.ReactElement | React.ReactElement[],
 }
 
 
-const MenuItem = ({ link, icon, text, dropdown }: MenuItemProps) => { 
+const MenuItem = ({ link, icon, text, dropdown, children }: MenuItemProps) => { 
     const [isHovered, setIsHovered] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
 
@@ -35,20 +36,11 @@ const MenuItem = ({ link, icon, text, dropdown }: MenuItemProps) => {
             {icon}
             <div className="text-[11px]">{text}</div>
         </Link>
-        {dropdown 
-            ?
-                <Dropdown 
-                  isOpen={isOpen}
-                >
-                    <ul>
-                        <li>One</li>
-                        <li>Two</li>
-                        <li>Three</li>
-                    </ul>
-                </Dropdown>
-            :
-                null
-        }
+        {dropdown && (
+          <Dropdown isOpen={isOpen}>
+            {children}
+          </Dropdown>
+        )}
       </div>
     )
 }
