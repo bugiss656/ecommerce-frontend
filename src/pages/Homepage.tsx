@@ -15,7 +15,23 @@ import {
   BsPerson,
   BsCart3
 } from 'react-icons/bs'
+import Carousel from "../components/Carousel/Carousel"
 
+
+const data = [
+  {
+      title: 'Slide title 1',
+      src: 'src/assets/slide-1.jpg'
+  },
+  {
+      title: 'Slide title 2',
+      src: 'src/assets/slide-2.jpg'
+  },
+  {
+      title: 'Slide title 3',
+      src: 'src/assets/slide-3.jpg'
+  }
+]
 
 const Homepage = () => {
     return (
@@ -100,6 +116,11 @@ const Homepage = () => {
             </div>
           </Navigation>
         </Header>
+        <div className="container">
+          <Carousel
+            items={data}
+          />
+        </div>
       </>
     )
 }
