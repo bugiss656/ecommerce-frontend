@@ -7,7 +7,7 @@ import MenuItem from "../components/Menu/MenuItem"
 import Navigation from "../components/Navigation/Navigation"
 import NavigationList from "../components/Navigation/NavigationList"
 import NavigationItem from "../components/Navigation/NavigationItem"
-import { Link } from "react-router-dom"
+import { Link, Outlet } from "react-router-dom"
 
 import logo from '../media/logo.png'
 import { 
@@ -120,6 +120,7 @@ const Homepage = () => {
           <Carousel
             items={data}
           />
+          <Outlet />
         </div>
       </>
     )

@@ -8,6 +8,7 @@ import {
 import Homepage from './pages/Homepage'
 
 import './index.css'
+import Login from './pages/Login'
 
 
 
@@ -15,6 +16,11 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Homepage />,
+    children: []
+  },
+  {
+    path: '/logowanie',
+    element: <Login />
   }
 ])
 

@@ -8,7 +8,7 @@ type HeaderProps = {
 
 const Header = ({ children, testid }: HeaderProps) => {
     return (
-      <header className="sticky shadow-md h-auto" data-testid={testid}>
+      <header className="sticky z-10 shadow-md h-auto" data-testid={testid}>
         {children}
       </header>
     );
