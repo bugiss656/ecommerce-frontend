@@ -22,4 +22,20 @@ api.interceptors.request.use(
     }
 )
 
+api.interceptors.response.use(
+    (response: AxiosResponse) => {
+        const newToken = response.headers['new-auth-token']
+        if (newToken) {
+            localStorage.setItem('authToken', newToken)
+        }
+        return response
+    },
+    (error) => {
+        if (error.response && error.response.status === 401) {
+            // TODO
+        }
+        return Promise.reject(error)
+    }
+)
+
 export default api
