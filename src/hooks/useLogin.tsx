@@ -16,7 +16,7 @@ export const useLogin = () => {
 
     const login: LoginData = async (email, password) => {
         try {
-            const response = await api.post<ResponseData>('login/', { email, password })
+            const response = await api.post<ResponseData>('customers/token/', { email, password })
             const { token } = response.data
             localStorage.setItem('authToken', token)
             setIsLoginSuccess(true)
