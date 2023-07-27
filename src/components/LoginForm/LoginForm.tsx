@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import { useLogin } from "../../hooks/useLogin"
 
 
 type Inputs = {
@@ -7,8 +10,23 @@ type Inputs = {
 }
 
 const LoginForm = () => {
+    const navigate = useNavigate()
     const { register, handleSubmit, formState: { errors } } = useForm<Inputs>()
-    const onSubmit: SubmitHandler<Inputs> = data => console.log(data)
+    const { login: loginUser, isLoginSuccess } = useLogin()
+    
+    const onSubmit: SubmitHandler<Inputs> = (data) => {
+        loginUser(data.email, data.password)
+    }
+
+    useEffect(() => {
+        if (isLoginSuccess) {
+            navigate('/')
+        }
+    }, [isLoginSuccess])
+
+    useEffect(() => {
+        if (localStorage.getItem('authToken')) navigate('/')
+    }, [])
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-1/3 p-5 shadow-md rounded-sm">
