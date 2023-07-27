@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, { AxiosHeaders } from "axios"
 import { 
     AxiosInstance, 
     AxiosResponse 
@@ -9,15 +9,14 @@ const api: AxiosInstance = axios.create({
     baseURL: 'http://localhost:8000/api/'
 })
 
-api.interceptors.request.use(
-    (config) => {
+api.interceptors.request.use(function (request) {
         const token = localStorage.getItem('authToken')
         if (token) {
-            api.defaults.headers.common['Authorization'] = `Token ${token}`
+            (request.headers as AxiosHeaders).set('Authorization', `Token ${token}`)
         }
-        return config
+        return request
     },
-    (error) => {
+    function (error) {
         return Promise.reject(error)
     }
 )
