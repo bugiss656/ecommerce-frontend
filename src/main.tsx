@@ -11,7 +11,8 @@ import Home from './pages/Home'
 import './index.css'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Account from './pages/Account'
+import Account, { AccountMain } from './pages/Account'
+import Orders from './pages/Orders'
 
 
 
@@ -26,8 +27,30 @@ const router = createBrowserRouter([
             },
             {
                 path: 'konto',
-                element: <Account />
-            } 
+                element: <Account />,
+                children: [
+                    {
+                        path: 'podglad',
+                        element: <AccountMain />
+                    },
+                    {
+                        path: 'zamowienia',
+                        element: <Orders />
+                    },
+                    {
+                        path: 'dane-do-zamowien',
+                        element: null
+                    },
+                    {
+                        path: 'listy-zakupowe',
+                        element: null
+                    },
+                    {
+                        path: 'ustawienia',
+                        element: null
+                    }
+                ]
+            },
         ]
     },
     {
