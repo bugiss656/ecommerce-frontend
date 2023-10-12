@@ -13,6 +13,8 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Account, { AccountMain } from './pages/Account'
 import Orders from './pages/Orders'
+import OrderInfo from './pages/OrderInfo'
+import ShoppingLists from './pages/ShoppingLists'
 
 
 
@@ -39,11 +41,11 @@ const router = createBrowserRouter([
                     },
                     {
                         path: 'dane-do-zamowien',
-                        element: null
+                        element: <OrderInfo />
                     },
                     {
                         path: 'listy-zakupowe',
-                        element: null
+                        element: <ShoppingLists />
                     },
                     {
                         path: 'ustawienia',
