@@ -1,22 +1,24 @@
 import { IconContext } from "react-icons"
 import { ReactElement } from "react"
+import { Link } from "react-router-dom"
 
 
 type AccountMenuItemProps = {
     icon: ReactElement,
-    text: string
+    text: string,
+    href: string
 }
 
 type AccountMenuProps = {
     children: ReactElement[]
 }
 
-export const AccountMenuItem = ({ icon, text }: AccountMenuItemProps) => {
+export const AccountMenuItem = ({ icon, text, href }: AccountMenuItemProps) => {
     return (
-        <a className="flex flex-row items-center px-3 py-4 hover:cursor-pointer hover:bg-slate-100">
+        <Link to={href} className="flex flex-row items-center px-3 py-4 hover:cursor-pointer hover:bg-slate-100">
             {icon}
             <span>{text}</span>
-        </a>
+        </Link>
     )
 }
 
