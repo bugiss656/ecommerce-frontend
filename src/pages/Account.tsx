@@ -10,7 +10,7 @@ import { AccountMenu, AccountMenuItem } from '../components/AccountMenu/AccountM
 import { OrderList, OrderListItem } from '../components/OrderList/OrderList'
 import { ShoppingListCard } from '../components/ShoppingList/ShoppingList'
 
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 
 
 export const AccountMain = () => {
@@ -19,7 +19,7 @@ export const AccountMain = () => {
             <div className="mb-8">
                 <div className="flex flex-row justify-between items-center mb-6">
                     <h1 className="text-2xl">Zamówienia</h1>
-                    <a href="" className="px-3 py-1 rounded hover:bg-slate-100">Zobacz więcej</a>
+                    <Link to="#" className="px-3 py-1 rounded hover:bg-slate-100">Zobacz więcej</Link>
                 </div>
                 <OrderList>
                     <OrderListItem icon={<BsCardImage />} />
@@ -28,7 +28,7 @@ export const AccountMain = () => {
             <div className="mb-8">
                 <div className="flex flex-row justify-between items-center mb-6">
                     <h1 className="text-2xl">Listy zakupowe</h1>
-                    <a href="" className="px-3 py-1 rounded hover:bg-slate-100">Zobacz więcej</a>
+                    <Link to="#" className="px-3 py-1 rounded hover:bg-slate-100">Zobacz więcej</Link>
                 </div>
                 {lists.map((list: any) =>
                     <ShoppingListCard
@@ -48,10 +48,26 @@ const Account = () => {
         <div className="w-full">
             <div className="flex flex-row mt-10">
                 <AccountMenu>
-                    <AccountMenuItem icon={<BsCardList />} text='Zamówienia' />
-                    <AccountMenuItem icon={<FaRegAddressCard />} text='Dane do zamówień' />
-                    <AccountMenuItem icon={<AiOutlineHeart />} text='Listy zakupowe' />
-                    <AccountMenuItem icon={<FiSettings />} text='Ustawienia konta' />
+                    <AccountMenuItem 
+                        icon={<BsCardList />} 
+                        text='Zamówienia' 
+                        href="/konto/zamowienia"
+                    />
+                    <AccountMenuItem 
+                        icon={<FaRegAddressCard />} 
+                        text='Dane do zamówień' 
+                        href="/konto/dane-do-zamowien"
+                    />
+                    <AccountMenuItem 
+                        icon={<AiOutlineHeart />} 
+                        text='Listy zakupowe' 
+                        href="/konto/listy-zakupowe"
+                    />
+                    <AccountMenuItem 
+                        icon={<FiSettings />} 
+                        text='Ustawienia konta' 
+                        href="/konto/ustawienia-konta"
+                    />
                 </AccountMenu>
                 <div className="w-4/5 border-l-[1px] px-4">
                     <Outlet />
