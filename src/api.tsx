@@ -21,8 +21,7 @@ api.interceptors.request.use(function (request) {
     }
 )
 
-api.interceptors.response.use(
-    (response: AxiosResponse) => {
+api.interceptors.response.use(function (response: AxiosResponse) {
         const newToken = response.headers['new-auth-token']
         if (newToken) {
             localStorage.setItem('authToken', newToken)
