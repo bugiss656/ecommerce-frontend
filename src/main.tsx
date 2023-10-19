@@ -16,6 +16,7 @@ import Orders from './pages/Orders'
 import OrderInfo from './pages/OrderInfo'
 import ShoppingLists from './pages/ShoppingLists'
 
+import AuthRequired from './components/AuthRequired/AuthRequired'
 
 
 const router = createBrowserRouter([
@@ -29,7 +30,10 @@ const router = createBrowserRouter([
             },
             {
                 path: 'konto',
-                element: <Account />,
+                element: 
+                    <AuthRequired>
+                        <Account />
+                    </AuthRequired>,
                 children: [
                     {
                         path: 'podglad',
