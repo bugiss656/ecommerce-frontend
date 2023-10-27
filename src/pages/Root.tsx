@@ -11,18 +11,41 @@ import { Link, Outlet } from "react-router-dom"
 
 import logo from "../media/logo.png"
 import { BsHeadset, BsPerson, BsCart3 } from "react-icons/bs"
+
 import { useEffect } from "react"
-import useGetUserData from "../hooks/useGetUserData"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
+import { selectAccount } from "../features/account/accountSlice"
+import { selectAccountStatus, selectAccountError, fetchAccountData } from "../features/account/accountSlice"
+import { selectLoginStatus, selectLoginError, handleUserLogout } from "../features/account/loginSlice"
 
 
 const Root = () => {
-    const { getUserData, user } = useGetUserData()
+    const dispatch = useAppDispatch()
+    const accountStatus = useAppSelector(selectAccountStatus)
+    const accountError = useAppSelector(selectAccountError)
+    const account = useAppSelector(selectAccount)
+
+    useEffect(() => {
+        const fetchAccountOnPageReload = () => {
+            if (!localStorage.getItem('authToken')) {
+                return
+            }
+
+            dispatch(fetchAccountData())
+        }
+        
+        window.addEventListener('load', fetchAccountOnPageReload)
+
+        return () => {
+            window.removeEventListener('load', fetchAccountOnPageReload)
+        }
+    }, [])
 
     useEffect(() => {
         if (localStorage.getItem('authToken')) {
-            getUserData()
+            console.log(account)
         }
-    }, [])
+    }, [accountStatus])
 
     return (
         <>
@@ -61,6 +84,9 @@ const Root = () => {
                                     <li>Twoje konto</li>
                                     <li>Zamówienia</li>
                                     <li>Ustawienia konta</li>
+                                    <li onClick={() => {
+                                        dispatch(handleUserLogout())
+                                        location.reload() }}>Wyloguj</li>
                                 </ul>
                             }
                         />
