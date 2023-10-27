@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-import { useLogin } from "../../hooks/useLogin"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { handleUserLogin, selectLoginError, selectLoginStatus, selectToken } from "../../features/account/loginSlice"
 
 
 type Inputs = {
@@ -12,17 +13,23 @@ type Inputs = {
 const LoginForm = () => {
     const navigate = useNavigate()
     const { register, handleSubmit, formState: { errors } } = useForm<Inputs>()
-    const { login: loginUser, isLoginSuccess } = useLogin()
+    const dispatch = useAppDispatch()
+    const status = useAppSelector(selectLoginStatus)
+    const error = useAppSelector(selectLoginError)
+    const token = useAppSelector(selectToken)
+    
     
     const onSubmit: SubmitHandler<Inputs> = (data) => {
-        loginUser(data.email, data.password)
+        dispatch(handleUserLogin({ email: data.email, password: data.password }))
     }
 
     useEffect(() => {
-        if (isLoginSuccess) {
+        if (status === 'succeeded') {
+            localStorage.setItem('authToken', token)
             navigate('/')
+            location.reload()
         }
-    }, [isLoginSuccess])
+    }, [status])
 
     useEffect(() => {
         if (localStorage.getItem('authToken')) navigate('/')

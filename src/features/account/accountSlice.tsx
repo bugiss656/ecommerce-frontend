@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { useSelector } from "react-redux"
 import api from "../../api"
 import { RootState } from "../../app/store"
 
@@ -41,11 +40,10 @@ export const accountSlice = createSlice({
     }
 })
 
-// export const {  } = accountSlice.actions
 
-export const selectStatus = (state: RootState) => state.account.status
+export const selectAccountStatus = (state: RootState) => state.account.status
 
-export const selectError = (state: RootState) => state.account.error
+export const selectAccountError = (state: RootState) => state.account.error
 
 export const selectAccount = (state: RootState) => state.account.account
 
