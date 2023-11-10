@@ -3,10 +3,23 @@ import api from "../../api"
 import { RootState } from "../../app/store"
 
 
+export enum Status {
+    IDLE = 'idle',
+    LOADING = 'loading',
+    SUCCEEDED = 'succeeded',
+    FAILED = 'failed'
+}
+
+type Account = {
+    email: string,
+    first_name: string,
+    last_name: string
+}
+
 interface AccountState {
-    status: string,
+    status: Status,
     error: string | undefined,
-    account: {}
+    account: Account | undefined
 }
 
 export const fetchAccountData = createAsyncThunk('account/fetchAccountData', async () => {
@@ -15,9 +28,9 @@ export const fetchAccountData = createAsyncThunk('account/fetchAccountData', asy
 })
 
 const initialState: AccountState = {
-    status: 'idle',
+    status: Status.IDLE,
     error: undefined,
-    account: {}
+    account: undefined
 }
 
 export const accountSlice = createSlice({
@@ -27,14 +40,14 @@ export const accountSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(fetchAccountData.pending, (state, action) => {
-                state.status = 'loading'
+                state.status = Status.LOADING
             })
             .addCase(fetchAccountData.fulfilled, (state, action) => {
-                state.status = 'succeeded'
+                state.status = Status.SUCCEEDED
                 state.account = action.payload
             })
             .addCase(fetchAccountData.rejected, (state, action) => {
-                state.status = 'failed'
+                state.status = Status.FAILED
                 state.error = action.error.message
             })
     }
