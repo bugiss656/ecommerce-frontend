@@ -45,33 +45,41 @@ export const AccountMain = () => {
 
 const Account = () => {
     return (
-        <div className="w-full">
-            <div className="flex flex-row mt-10">
+        <div className="w-full flex flex-row justify-center mt-10">
+            <div className="w-1/5">
                 <AccountMenu>
+                    <div className="mb-3">
+                        <p className="mb-1">Witaj,</p>
+                        <p className="text-xl font-medium">John Doe</p>
+                    </div>
                     <AccountMenuItem 
                         icon={<BsCardList />} 
                         text='Zamówienia' 
                         href="/konto/zamowienia"
+                        className='flex flex-row items-center px-3 py-4 hover:cursor-pointer hover:bg-slate-100'
                     />
                     <AccountMenuItem 
                         icon={<FaRegAddressCard />} 
                         text='Dane do zamówień' 
                         href="/konto/dane-do-zamowien"
+                        className='flex flex-row items-center px-3 py-4 hover:cursor-pointer hover:bg-slate-100'
                     />
                     <AccountMenuItem 
                         icon={<AiOutlineHeart />} 
                         text='Listy zakupowe' 
                         href="/konto/listy-zakupowe"
+                        className='flex flex-row items-center px-3 py-4 hover:cursor-pointer hover:bg-slate-100'
                     />
                     <AccountMenuItem 
                         icon={<FiSettings />} 
                         text='Ustawienia konta' 
                         href="/konto/ustawienia-konta"
+                        className='flex flex-row items-center px-3 py-4 hover:cursor-pointer hover:bg-slate-100'
                     />
                 </AccountMenu>
-                <div className="w-4/5 border-l-[1px] px-4">
-                    <Outlet />
-                </div>
+            </div>
+            <div className="w-3/4 border-l-[1px] px-4">
+                <Outlet />
             </div>
         </div>
     )
