@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { handleUserLogin, selectLoginError, selectLoginStatus, selectToken } from "../../features/account/loginSlice"
+import Button from "../Button/Button"
 
 
 type Inputs = {
@@ -48,8 +49,11 @@ const LoginForm = () => {
                 <label htmlFor="">Hasło</label>
                 <input type="text" className="border rounded-full px-4 py-2 focus:outline-0" autoComplete="off" {...register("password")} />
             </div>
-
-            <input type="submit" className="bg-slate-500 text-white rounded-full py-3 my-3 hover:cursor-pointer" value="Zaloguj się" />
+            <Button 
+                className="rounded-full text-white w-full py-3 mt-3 bg-green-500 hover:bg-green-600"
+                type="submit"
+                text="Zaloguj się"
+            />
         </form>
     )
 }

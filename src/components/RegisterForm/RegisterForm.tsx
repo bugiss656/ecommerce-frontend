@@ -5,6 +5,7 @@ import {
 } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { useRegister } from "../../hooks/useRegister"
+import Button from "../Button/Button"
 
 
 type Inputs = {
@@ -125,10 +126,10 @@ const RegisterForm = () => {
                 {errors.re_password?.type === 'minLength' && <span className="text-sm text-red-500">Hasło musi mieć min. 6 znaków</span>}
             </div> */}
 
-            <input 
-                type="submit" 
-                className="bg-green-600 text-white rounded-full py-3 my-3 hover:cursor-pointer" 
-                value="Zarejestruj się" 
+            <Button 
+                className="rounded-full text-white w-full mt-3 py-3 bg-green-500 hover:bg-green-600" 
+                type="submit"             
+                text="Zarejestruj się" 
             />
         </form>
     )

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import Logo from "../components/Logo/Logo"
 import logo from "../media/logo.png"
 import LoginForm from "../components/LoginForm/LoginForm"
+import Button from "../components/Button/Button"
 
 
 const Login = () => {
@@ -21,8 +22,12 @@ const Login = () => {
                 <LoginForm />
                 <div className="flex flex-col ml-24 mt-5">
                     <h1 className="text-[30px] font-bold">Nie masz konta?</h1>
-                    <div className="rounded-full bg-slate-500 text-white py-3 my-8 text-center hover:cursor-pointer">Załóż konto</div>
-
+                    <Button 
+                        className="rounded-full border-[1px] w-full text-blue-500 bg-white border-blue-500 py-3 my-8 hover:text-white hover:bg-blue-500"
+                        type="button"
+                        href="/rejestracja"
+                        text="Załóż konto"
+                    />
                     <h2 className="text-[20px] font-bold">Dla czego warto mieć konto na ecommerce</h2>
                     <div className="flex flex-col my-3">
                         <div className="my-3">
