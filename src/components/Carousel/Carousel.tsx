@@ -1,4 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
+
+import { Banner } from '../../features/banner/bannerSlice'
+
 import { IconContext } from 'react-icons'
 import { 
     SlArrowLeft,
@@ -6,13 +9,8 @@ import {
 } from 'react-icons/sl'
 
 
-type Slide = {
-    title: string,
-    src: string
-}[]
-
-type CarouselProps = {
-    items: Slide
+interface CarouselProps  {
+    items: null | Banner[]
 }
 
 const Carousel = ({ items }: CarouselProps) => {
@@ -51,15 +49,17 @@ const Carousel = ({ items }: CarouselProps) => {
     }, [slideWidth])
 
     useEffect(() => {
-        if(translateX === -(items.length * slideWidth)) {
-            setTranslateX(0)
-            handleUpdateSlide(translateX)
-        }else if(translateX === slideWidth) {
-            setTranslateX(-((items.length - 1) * slideWidth))
-            handleUpdateSlide(translateX)
-        }else {
-            handleUpdateSlide(translateX)
-        }
+        if (items != null) {
+            if (translateX === -(items.length * slideWidth)) {
+                setTranslateX(0)
+                handleUpdateSlide(translateX)
+            } else if (translateX === slideWidth) {
+                setTranslateX(-((items.length - 1) * slideWidth))
+                handleUpdateSlide(translateX)
+            } else {
+                handleUpdateSlide(translateX)
+            }
+        } 
     }, [translateX])
 
     useEffect(() => {
@@ -76,10 +76,10 @@ const Carousel = ({ items }: CarouselProps) => {
                 <div className="carousel__inner relative w-full">
                     <div className="flex relative overflow-hidden">
                         <div ref={carouselSlidesRef} className="carousel__slides w-full flex flex-row ease-linear duration-200">
-                            {items.map((slide) =>
+                            {items?.map((slide) =>
                                 <img 
                                     key={slide.title}
-                                    src={slide.src} 
+                                    src={slide.image} 
                                     alt={slide.title} 
                                     className="carousel__slide w-full max-w-full h-auto rounded-lg" 
                                 />
@@ -89,7 +89,7 @@ const Carousel = ({ items }: CarouselProps) => {
                     <div 
                         onClick={() => {
                             setTranslateX(prev => prev + slideWidth)
-                            if(activeSlide === 0) {
+                            if (items != null &&  activeSlide === 0) {
                                 setActiveSlide(items.length - 1)
                             } else {
                                 setActiveSlide(prev => prev - 1)
@@ -102,7 +102,7 @@ const Carousel = ({ items }: CarouselProps) => {
                     <div 
                         onClick={() => {
                             setTranslateX(prev => prev - slideWidth)
-                            if(activeSlide === items.length - 1) {
+                            if (items != null && activeSlide === items.length - 1) {
                                 setActiveSlide(0)
                             } else {
                                 setActiveSlide(prev => prev + 1)
@@ -114,7 +114,7 @@ const Carousel = ({ items }: CarouselProps) => {
                     </div>
                 </div>
                 <div ref={carouselIndicatorsRef} className="carousel__indicators flex flex-row justify-center">
-                    {items.map((item, index) =>
+                    {items?.map((item, index) =>
                         <div
                             onClick={() => {
                                 setTranslateX(-(slideWidth * index))

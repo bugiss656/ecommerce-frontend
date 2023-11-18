@@ -1,26 +1,25 @@
+import { useEffect } from "react"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
 import Carousel from "../components/Carousel/Carousel"
+import { fetchBanners, selectBannerError, selectBanners, selectBannerStatus } from "../features/banner/bannerSlice"
 
 
 const Home = () => {
+    const dispatch = useAppDispatch()
+    const bannerStatus = useAppSelector(selectBannerStatus)
+    const bannerError = useAppSelector(selectBannerError)
+    const banners = useAppSelector(selectBanners)
 
-    const data = [
-        {
-            title: "Slide title 1",
-            src: "src/assets/slide-1.jpg",
-        },
-        {
-            title: "Slide title 2",
-            src: "src/assets/slide-2.jpg",
-        },
-        {
-            title: "Slide title 3",
-            src: "src/assets/slide-3.jpg",
-        },
-    ];
+
+    useEffect(() => {
+        dispatch(fetchBanners())
+    }, [])
     
     return (
         <>
-            <Carousel items={data} />
+            {banners && 
+                <Carousel items={banners} />
+            }
         </>
     )
 }
