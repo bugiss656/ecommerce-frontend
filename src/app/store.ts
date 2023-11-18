@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit"
 import loginReducer from "../features/account/loginSlice"
 import accountReducer from "../features/account/accountSlice"
+import bannerReducer from "../features/banner/bannerSlice"
 
 
 const store = configureStore({
     reducer: {
         login: loginReducer,
-        account: accountReducer
+        account: accountReducer,
+        banner: bannerReducer
     }
 })
 
