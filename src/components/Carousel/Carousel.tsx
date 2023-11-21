@@ -71,17 +71,17 @@ const Carousel = ({ items }: CarouselProps) => {
     }, [activeSlide])
 
     return (
-        <div className="carousel w-full mt-5">
+        <div className="carousel w-full mt-5" data-testid="carousel">
             <IconContext.Provider value={{ color: '#000000', size: '25', style: { margin: '10px 5px', backgroundColor: '' } }}>
                 <div className="carousel__inner relative w-full">
                     <div className="flex relative overflow-hidden">
-                        <div ref={carouselSlidesRef} className="carousel__slides w-full flex flex-row ease-linear duration-200">
+                        <div ref={carouselSlidesRef} className="carousel__banners w-full flex flex-row ease-linear duration-200" data-testid="carousel-banners">
                             {items?.map((slide) =>
                                 <img 
                                     key={slide.title}
                                     src={slide.image} 
                                     alt={slide.title} 
-                                    className="carousel__slide w-full max-w-full h-auto rounded-lg" 
+                                    className="carousel__banner w-full max-w-full h-auto rounded-lg" 
                                 />
                             )}
                         </div>
@@ -96,6 +96,7 @@ const Carousel = ({ items }: CarouselProps) => {
                             }
                         }} 
                         className="arrow-prev absolute top-1/2 -translate-y-1/2 -left-5 bg-white shadow-md rounded-md hover:cursor-pointer hover:bg-slate-100"
+                        data-testid="arrow-prev"
                     >
                         <SlArrowLeft />
                     </div>
@@ -109,6 +110,7 @@ const Carousel = ({ items }: CarouselProps) => {
                             }
                         }} 
                         className="arrow-next absolute top-1/2 -translate-y-1/2 -right-5 bg-white shadow-md rounded-md hover:cursor-pointer hover:bg-slate-100"
+                        data-testid="arrow-next"
                     >
                         <SlArrowRight />
                     </div>
@@ -116,11 +118,12 @@ const Carousel = ({ items }: CarouselProps) => {
                 <div ref={carouselIndicatorsRef} className="carousel__indicators flex flex-row justify-center">
                     {items?.map((item, index) =>
                         <div
+                            key={item.title}
                             onClick={() => {
                                 setTranslateX(-(slideWidth * index))
                                 setActiveSlide(index)
                             }} 
-                            className="carousel__button px-10 py-3 border-t-4 border-t-transparent font-medium rounded transition-colors ease-in-out duration-200 hover:bg-slate-200 hover:cursor-pointer">{item.title}
+                            className="carousel__button px-10 py-3 border-t-4 border-t-transparent font-medium rounded transition-colors ease-in-out duration-200 hover:bg-slate-200 hover:cursor-pointer" data-testid="carousel-indicator">{item.title}
                         </div>
                     )}
                 </div>
