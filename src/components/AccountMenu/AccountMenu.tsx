@@ -11,21 +11,21 @@ type AccountMenuItemProps = {
 }
 
 type AccountMenuProps = {
-    children: ReactElement[]
+    children?: ReactElement | ReactElement[]
 }
 
 export const AccountMenuItem = ({ icon, text, href, className }: AccountMenuItemProps) => {
     return (
         <Link to={href} className={className}>
             {icon}
-            <span>{text}</span>
+            {text}
         </Link>
     )
 }
 
 export const AccountMenu = ({ children }: AccountMenuProps) => {
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col" data-testid="account-menu">
             <IconContext.Provider
                 value={{
                     style: {
