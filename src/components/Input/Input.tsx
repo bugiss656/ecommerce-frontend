@@ -1,7 +1,7 @@
 
 
-type InputProps = {
-    type: string | undefined,
+interface InputProps {
+    type: "button" | "email" | "password" | "submit" | "text" | undefined,
     placeholder: string | undefined,
     value: string | undefined,
     onBlur?: () => void,
@@ -15,6 +15,7 @@ const Input = ({ type, placeholder, value, onBlur, onChange, onClick, onFocus }:
     return (
         <input 
             className="border rounded w-full px-3 py-2 focus:outline-none focus:shadow-md"
+            role="input"
             type={type} 
             placeholder={placeholder}
             value={value}

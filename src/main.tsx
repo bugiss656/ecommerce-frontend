@@ -18,7 +18,7 @@ import ShoppingLists from './pages/ShoppingLists'
 
 import AuthRequired from './components/AuthRequired/AuthRequired'
 import { Provider } from 'react-redux'
-import store from './app/store'
+import { setupStore } from './app/store'
 
 
 const router = createBrowserRouter([
@@ -74,7 +74,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
-        <Provider store={store}>
+        <Provider store={setupStore()}>
             <RouterProvider router={router} />
         </Provider>
     </React.StrictMode>

@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
+import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { handleUserLogin, selectLoginError, selectLoginStatus, selectToken } from "../../features/account/loginSlice"
@@ -37,17 +38,17 @@ const LoginForm = () => {
     }, [])
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-1/3 p-5 shadow-md rounded-sm">
-            <h1 className="text-[30px] font-bold mb-3">Zaloguj się</h1>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-1/3 p-5 shadow-md rounded-sm" data-testid="login-form">
+            <h1 className="text-[30px] font-bold mb-3" data-testid="form-heading">Zaloguj się</h1>
             
             <div className="form-control flex flex-col my-3">
-                <label htmlFor="">E-mail</label>
-                <input type="text" className="border rounded-full px-4 py-2 focus:outline-0" autoComplete="off" {...register("email")} />
+                <label htmlFor="email-input">E-mail</label>
+                <input type="text" role="input" id="email-input" className="border rounded-full px-4 py-2 focus:outline-0" autoComplete="off" {...register("email")} />
             </div>
             
             <div className="form-control flex flex-col my-3">
-                <label htmlFor="">Hasło</label>
-                <input type="text" className="border rounded-full px-4 py-2 focus:outline-0" autoComplete="off" {...register("password")} />
+                <label htmlFor="password-input">Hasło</label>
+                <input type="text" role="input" id="password-input" className="border rounded-full px-4 py-2 focus:outline-0" autoComplete="off" {...register("password")} />
             </div>
             <Button 
                 className="rounded-full text-white w-full py-3 mt-3 bg-green-500 hover:bg-green-600"
