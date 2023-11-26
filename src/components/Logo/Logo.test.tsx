@@ -5,7 +5,7 @@ import Logo from './Logo'
 
 
 describe('Logo component', () => {
-    it('Renders Logo component', () => {
+    it('Renders Logo component ', () => {
         render(
             <Logo 
                 src="/media/logo.png"
@@ -13,7 +13,9 @@ describe('Logo component', () => {
             />
         )
 
-        const logoElement = screen.getByAltText('logo')
-        expect(logoElement).toBeInTheDocument()
+        const logo = screen.getByAltText('logo')
+        
+        expect(logo).toBeInTheDocument()
+        expect(logo).toHaveAttribute('src', '/media/logo.png')
     })
 })
