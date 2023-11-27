@@ -39,37 +39,46 @@ const RegisterForm = () => {
     }, [error])
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-1/3 p-5 shadow-md rounded-sm">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-1/3 p-5 shadow-md rounded-sm" data-testid="register-form">
             <h1 className="text-[30px] font-bold mb-3">Zarejestruj się</h1>
 
             <div className="form-control flex flex-col my-3">
-                <label htmlFor="">Imię</label>
+                <label htmlFor="firstName">Imię</label>
                 <input 
                     type="text" 
+                    role="input"
+                    id="firstName"
                     className="border rounded-full px-4 py-2 focus:outline-0" 
                     autoComplete="off" 
+                    data-testid="firstName"
                     {...register("firstName", { required: true })} 
                 />
                 {errors.firstName?.type === 'required' && <span className="text-sm text-red-500">Pole jest wymagane</span>}
             </div>
 
             <div className="form-control flex flex-col my-3">
-                <label htmlFor="">Nazwisko</label>
+                <label htmlFor="lastName">Nazwisko</label>
                 <input 
                     type="text" 
+                    role="input"
+                    id="lastName"
                     className="border rounded-full px-4 py-2 focus:outline-0" 
                     autoComplete="off" 
+                    data-testid="lastName"
                     {...register("lastName", { required: true })} 
                 />
                 {errors.lastName?.type === 'required' && <span className="text-sm text-red-500">Pole jest wymagane</span>}
             </div>
 
             <div className="form-control flex flex-col my-3">
-                <label htmlFor="">E-mail</label>
+                <label htmlFor="email">E-mail</label>
                 <input 
                     type="text" 
+                    role="input"
+                    id="email"
                     className="border rounded-full px-4 py-2 focus:outline-0" 
                     autoComplete="off" 
+                    data-testid="email"
                     {...register("email", { 
                         required: true, 
                         pattern: {
@@ -97,11 +106,14 @@ const RegisterForm = () => {
             </div> */}
 
             <div className="form-control flex flex-col my-3">
-                <label htmlFor="">Hasło</label>
+                <label htmlFor="password">Hasło</label>
                 <input 
                     type="text" 
+                    role="input"
+                    id="password"
                     className="border rounded-full px-4 py-2 focus:outline-0" 
-                    autoComplete="off" 
+                    autoComplete="off"
+                    data-testid="password" 
                     {...register("password", { 
                         required: true,
                         minLength: 6
