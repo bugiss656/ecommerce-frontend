@@ -176,10 +176,54 @@ const Root = () => {
                 <Navigation>
                     <div className="container">
                         <NavigationList>
-                            <NavigationItem href="#" text="Kategoria 1" dropdown={true} />
-                            <NavigationItem href="#" text="Kategoria 2" dropdown={true} />
-                            <NavigationItem href="#" text="Kategoria 3" dropdown={true} />
-                            <NavigationItem href="#" text="Kategoria 4" dropdown={true} />
+                            <NavigationItem 
+                                href="#" 
+                                text="Kategoria 1" 
+                                dropdown={true}
+                                children={
+                                    <ul>
+                                        <li>Category 1</li>
+                                        <li>Category 2</li>
+                                        <li>Category 3</li>
+                                    </ul>
+                                } 
+                            />
+                            <NavigationItem 
+                                href="#" 
+                                text="Kategoria 2" 
+                                dropdown={true}
+                                children={
+                                    <ul>
+                                        <li>Category 1</li>
+                                        <li>Category 2</li>
+                                        <li>Category 3</li>
+                                    </ul>
+                                }  
+                            />
+                            <NavigationItem 
+                                href="#" 
+                                text="Kategoria 3" 
+                                dropdown={true} 
+                                children={
+                                    <ul>
+                                        <li>Category 1</li>
+                                        <li>Category 2</li>
+                                        <li>Category 3</li>
+                                    </ul>
+                                } 
+                            />
+                            <NavigationItem 
+                                href="#" 
+                                text="Kategoria 4" 
+                                dropdown={true} 
+                                children={
+                                    <ul>
+                                        <li>Category 1</li>
+                                        <li>Category 2</li>
+                                        <li>Category 3</li>
+                                    </ul>
+                                } 
+                            />
                         </NavigationList>
                     </div>
                 </Navigation>
