@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { 
     useForm,
     SubmitHandler 
@@ -24,6 +24,7 @@ const RegisterForm = () => {
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         registerUser(data.email, data.password, data.firstName, data.lastName)
     }
+    const [passwordVisibility, setPasswordVisibility] = useState('password')
 
     useEffect(() => {
         if (isRegistrationSuccess) {
@@ -42,8 +43,8 @@ const RegisterForm = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-1/3 p-5 shadow-md rounded-sm" data-testid="register-form">
             <h1 className="text-[30px] font-bold mb-3">Zarejestruj się</h1>
 
-            <div className="form-control flex flex-col my-3">
-                <label htmlFor="firstName">Imię</label>
+            <div className="relative flex flex-col my-6">
+                <label htmlFor="firstName" className="absolute -top-6 left-0">Imię</label>
                 <input 
                     type="text" 
                     role="input"
@@ -56,8 +57,8 @@ const RegisterForm = () => {
                 {errors.firstName?.type === 'required' && <span className="text-sm text-red-500">Pole jest wymagane</span>}
             </div>
 
-            <div className="form-control flex flex-col my-3">
-                <label htmlFor="lastName">Nazwisko</label>
+            <div className="relative flex flex-col my-6">
+                <label htmlFor="lastName" className="absolute -top-6 left-0">Nazwisko</label>
                 <input 
                     type="text" 
                     role="input"
@@ -70,8 +71,8 @@ const RegisterForm = () => {
                 {errors.lastName?.type === 'required' && <span className="text-sm text-red-500">Pole jest wymagane</span>}
             </div>
 
-            <div className="form-control flex flex-col my-3">
-                <label htmlFor="email">E-mail</label>
+            <div className="relative flex flex-col my-6">
+                <label htmlFor="email" className="absolute -top-6 left-0">E-mail</label>
                 <input 
                     type="text" 
                     role="input"
@@ -92,51 +93,37 @@ const RegisterForm = () => {
                 {errors.email?.type === 'alreadyExists' && <span className="text-sm text-red-500">{errors.email.message}</span>}
             </div>
 
-            {/* <div className="form-control flex flex-col my-3">
-                <label htmlFor="">Telefon</label>
-                <input 
-                    type="text" 
-                    className="border rounded-full px-4 py-2 focus:outline-0" 
-                    autoComplete="off" 
-                    {...register("phone", { 
-                        required: true,
-                    })} 
-                />
-                {errors.phone?.type === 'required' && <span className="text-sm text-red-500">Pole jest wymagane</span>}
-            </div> */}
-
-            <div className="form-control flex flex-col my-3">
-                <label htmlFor="password">Hasło</label>
-                <input 
-                    type="text" 
-                    role="input"
-                    id="password"
-                    className="border rounded-full px-4 py-2 focus:outline-0" 
-                    autoComplete="off"
-                    data-testid="password" 
-                    {...register("password", { 
-                        required: true,
-                        minLength: 6
-                    })} 
-                />
+            <div className="relative my-6">
+                <label htmlFor="password" className="absolute -top-6 left-0">Hasło</label>
+                <div className="relative flex flex-col">
+                    <input 
+                        type={passwordVisibility} 
+                        role="input"
+                        id="password"
+                        className="border rounded-full px-4 py-2 focus:outline-0" 
+                        autoComplete="off"
+                        data-testid="password" 
+                        {...register("password", { 
+                            required: true,
+                            minLength: 6
+                        })} 
+                    />
+                    <div className="absolute top-1/2 right-5 -translate-y-1/2">
+                        {passwordVisibility === "password" ?
+                            <button
+                                type="button" 
+                                onClick={() => setPasswordVisibility("text")}
+                            >Pokaż</button> :
+                            <button
+                                type="button"  
+                                onClick={() => setPasswordVisibility("password")} 
+                            >Ukryj</button>
+                        }
+                    </div>
+                </div>
                 {errors.password?.type === 'required' && <span className="text-sm text-red-500">Pole jest wymagane</span>}
                 {errors.password?.type === 'minLength' && <span className="text-sm text-red-500">Hasło musi mieć min. 6 znaków</span>}
             </div>
-
-            {/* <div className="form-control flex flex-col my-3">
-                <label htmlFor="">Powtórz hasło</label>
-                <input 
-                    type="text" 
-                    className="border rounded-full px-4 py-2 focus:outline-0" 
-                    autoComplete="off" 
-                    {...register("re_password", { 
-                        required: true,
-                        minLength: 8
-                    })} 
-                />
-                {errors.re_password?.type === 'required' && <span className="text-sm text-red-500">Pole jest wymagane</span>}
-                {errors.re_password?.type === 'minLength' && <span className="text-sm text-red-500">Hasło musi mieć min. 6 znaków</span>}
-            </div> */}
 
             <Button 
                 className="rounded-full text-white w-full mt-3 py-3 bg-green-500 hover:bg-green-600" 
