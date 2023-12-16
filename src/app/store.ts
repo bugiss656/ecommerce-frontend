@@ -4,12 +4,14 @@ import { PreloadedState } from "@reduxjs/toolkit"
 import loginReducer from "../features/account/loginSlice"
 import accountReducer from "../features/account/accountSlice"
 import bannerReducer from "../features/banner/bannerSlice"
+import categoriesReducer from "../features/categories/categoriesSlice"
 
 
 const rootReducer = combineReducers({
     login: loginReducer,
     account: accountReducer,
-    banner: bannerReducer 
+    banner: bannerReducer,
+    categories: categoriesReducer
 })
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
