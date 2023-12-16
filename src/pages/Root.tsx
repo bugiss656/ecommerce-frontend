@@ -23,6 +23,7 @@ import { selectAccount, Status } from "../features/account/accountSlice"
 import { selectAccountStatus, selectAccountError, fetchAccountData } from "../features/account/accountSlice"
 import { handleUserLogout } from "../features/account/loginSlice"
 import { AccountMenu, AccountMenuItem } from "../components/AccountMenu/AccountMenu"
+import { Category, fetchCategories, selectCategories, selectCategoriesError, selectCategoriesStatus } from "../features/categories/categoriesSlice"
 
 
 const Root = () => {
@@ -30,6 +31,13 @@ const Root = () => {
     const accountStatus = useAppSelector(selectAccountStatus)
     const accountError = useAppSelector(selectAccountError)
     const account = useAppSelector(selectAccount)
+
+    const categoriesStatus = useAppSelector(selectCategoriesStatus)
+    const categoriesError = useAppSelector(selectCategoriesError)
+    const categories = useAppSelector(selectCategories)
+
+    const parentCategories = categories?.filter((category: Category) => category.parent_category === null)
+
 
     useEffect(() => {
         const fetchAccountOnPageReload = () => {
@@ -46,6 +54,10 @@ const Root = () => {
             window.removeEventListener('load', fetchAccountOnPageReload)
         }
     }, [])
+
+    useEffect(() => {
+        dispatch(fetchCategories())
+    }, [dispatch])
 
     useEffect(() => {
         if (localStorage.getItem('authToken')) {
@@ -176,54 +188,23 @@ const Root = () => {
                 <Navigation>
                     <div className="container">
                         <NavigationList>
-                            <NavigationItem 
-                                href="#" 
-                                text="Kategoria 1" 
-                                dropdown={true}
-                                children={
-                                    <ul>
-                                        <li>Category 1</li>
-                                        <li>Category 2</li>
-                                        <li>Category 3</li>
-                                    </ul>
-                                } 
-                            />
-                            <NavigationItem 
-                                href="#" 
-                                text="Kategoria 2" 
-                                dropdown={true}
-                                children={
-                                    <ul>
-                                        <li>Category 1</li>
-                                        <li>Category 2</li>
-                                        <li>Category 3</li>
-                                    </ul>
-                                }  
-                            />
-                            <NavigationItem 
-                                href="#" 
-                                text="Kategoria 3" 
-                                dropdown={true} 
-                                children={
-                                    <ul>
-                                        <li>Category 1</li>
-                                        <li>Category 2</li>
-                                        <li>Category 3</li>
-                                    </ul>
-                                } 
-                            />
-                            <NavigationItem 
-                                href="#" 
-                                text="Kategoria 4" 
-                                dropdown={true} 
-                                children={
-                                    <ul>
-                                        <li>Category 1</li>
-                                        <li>Category 2</li>
-                                        <li>Category 3</li>
-                                    </ul>
-                                } 
-                            />
+                            {categories &&
+                                parentCategories?.map((category: Category) => 
+                                    <NavigationItem 
+                                        key={category.name}
+                                        href="#" 
+                                        text={category.name} 
+                                        dropdown={category?.subcategories?.length !== 0 ? true : false}
+                                        children={
+                                            <ul className="p-5">
+                                                {category.subcategories?.map((subcategory: Category) =>
+                                                    <li key={subcategory.name} className="my-2">{subcategory.name}</li>
+                                                )}
+                                            </ul>
+                                        } 
+                                    />
+                                )
+                            }
                         </NavigationList>
                     </div>
                 </Navigation>
