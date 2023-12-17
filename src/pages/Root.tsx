@@ -19,7 +19,8 @@ import { FiSettings } from 'react-icons/fi'
 
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
-import { selectAccount, Status } from "../features/account/accountSlice"
+import { selectAccount } from "../features/account/accountSlice"
+import { Status } from "../features/types"
 import { selectAccountStatus, selectAccountError, fetchAccountData } from "../features/account/accountSlice"
 import { handleUserLogout } from "../features/account/loginSlice"
 import { AccountMenu, AccountMenuItem } from "../components/AccountMenu/AccountMenu"
@@ -192,7 +193,7 @@ const Root = () => {
                                 parentCategories?.map((category: Category) => 
                                     <NavigationItem 
                                         key={category.name}
-                                        href="#" 
+                                        href={`kategorie/${category.slug}`} 
                                         text={category.name} 
                                         dropdown={category?.subcategories?.length !== 0 ? true : false}
                                         children={
@@ -216,4 +217,4 @@ const Root = () => {
     )
 }
 
-export default Root;
+export default Root
