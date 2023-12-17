@@ -1,14 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import api from "../../api"
 import { RootState } from "../../app/store"
+import { Status } from "../types"
 
-
-export enum Status {
-    IDLE = 'idle',
-    LOADING = 'loading',
-    SUCCEEDED = 'succeeded',
-    FAILED = 'failed'
-}
 
 type Account = {
     email: string,
