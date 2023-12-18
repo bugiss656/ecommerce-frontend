@@ -6,6 +6,7 @@ import { RootState } from "../../app/store"
 export type Category = {
     name: string,
     slug: string,
+    image: string,
     parent_category: string | null,
     subcategories: Category[] | null
 }
