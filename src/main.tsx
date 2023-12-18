@@ -19,6 +19,8 @@ import ShoppingLists from './pages/ShoppingLists'
 import AuthRequired from './components/AuthRequired/AuthRequired'
 import { Provider } from 'react-redux'
 import { setupStore } from './app/store'
+import Categories from './pages/Categories'
+import Products from './pages/Products'
 
 
 const router = createBrowserRouter([
@@ -59,6 +61,11 @@ const router = createBrowserRouter([
                     }
                 ]
             },
+            {
+                path: 'kategorie/:category',
+                element: <Categories />,
+                children: []
+            }
         ]
     },
     {
