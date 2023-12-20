@@ -21,6 +21,7 @@ import { Provider } from 'react-redux'
 import { setupStore } from './app/store'
 import Categories from './pages/Categories'
 import Products from './pages/Products'
+import Product from './pages/Product'
 
 
 const router = createBrowserRouter([
@@ -65,6 +66,14 @@ const router = createBrowserRouter([
                 path: 'kategorie/:category',
                 element: <Categories />,
                 children: []
+            },
+            {
+                path: 'produkty/:category',
+                element: <Products />,
+            },
+            {
+                path: 'produkty/:product',
+                element: <Product />,
             }
         ]
     },
