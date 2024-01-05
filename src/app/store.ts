@@ -5,13 +5,17 @@ import loginReducer from "../features/account/loginSlice"
 import accountReducer from "../features/account/accountSlice"
 import bannerReducer from "../features/banner/bannerSlice"
 import categoriesReducer from "../features/categories/categoriesSlice"
+import productsReducer from "../features/products/productsSlice"
+import productDetailReducer from "../features/products/productDetailSlice"
 
 
 const rootReducer = combineReducers({
     login: loginReducer,
     account: accountReducer,
     banner: bannerReducer,
-    categories: categoriesReducer
+    categories: categoriesReducer,
+    products: productsReducer,
+    product: productDetailReducer
 })
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
