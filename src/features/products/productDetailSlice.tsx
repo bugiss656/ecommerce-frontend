@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import api from "../../api"
 import { RootState } from "../../app/store"
-import { Product } from "./productsSlice"
+import { Product } from "./types"
 
 
 interface ProductState {
@@ -16,10 +16,13 @@ const initialState: ProductState = {
     product: undefined
 }
 
-export const fetchProductDetail = createAsyncThunk<Product, { slug: string | undefined }>('products/fetchProductDetail', async ({ slug }) => {
-    const response = await api.get(`products/product/${slug}`)
-    return response.data
-})
+export const fetchProductDetail = createAsyncThunk<Product, { slug: string | undefined }>(
+    'products/fetchProductDetail', 
+    async ({ slug }) => {
+        const response = await api.get(`products/product/${slug}`)
+        return response.data
+    }
+)
 
 export const productDetailSlice = createSlice({
     name: 'singleProduct',
@@ -33,7 +36,7 @@ export const productDetailSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(fetchProductDetail.pending, (state, action) => {
+            .addCase(fetchProductDetail.pending, (state) => {
                 state.status = 'loading'
             })
             .addCase(fetchProductDetail.fulfilled, (state, action) => {

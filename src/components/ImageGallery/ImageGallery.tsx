@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl"
-import { Image } from "../../features/products/productsSlice"
+import { Image } from "../../features/products/types"
 
 
 type ImageGalleryProps = {
@@ -30,7 +30,11 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
         <div className="relative">
             <div className="relative">
                 {images?.length != 0 ?
-                    <img src={images![currentImage].image} alt={images![currentImage].alt} /> : 
+                    <img 
+                        src={images![currentImage].image} 
+                        alt={images![currentImage].alt} 
+                        className="w-full h-auto" 
+                    /> : 
                     null
                 }
             </div>

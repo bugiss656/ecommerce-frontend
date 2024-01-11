@@ -1,7 +1,7 @@
 
 
 type NavigationListProps = {
-    children: React.ReactElement | React.ReactElement[]
+    children: React.ReactNode | React.ReactNode[] | null
 }
 
 

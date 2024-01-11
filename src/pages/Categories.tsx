@@ -22,7 +22,7 @@ const Categories = () => {
 
     useEffect(() => {
         dispatch(fetchSubcategories({ category: category }))
-    }, [dispatch])
+    }, [dispatch, category])
 
     return (
         <div className="my-6">
@@ -34,7 +34,7 @@ const Categories = () => {
                 {subcategories &&
                     subcategories.map((subcategory) => 
                         <CategoryCard
-                            href={`produkty/${subcategory.slug}`}
+                            href={`/produkty-w-kategoriach/${subcategory.slug}`}
                             image={subcategory.image}
                             alt={subcategory.name}
                             title={subcategory.name}

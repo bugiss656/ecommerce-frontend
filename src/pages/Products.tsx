@@ -7,7 +7,7 @@ import {
     fetchProducts
 } from "../features/products/productsSlice"
 import { useEffect } from "react"
-import { convertStringToSlug } from "../utils/functions"
+import { convertStringToSlug, convertSlugToString } from "../utils/functions"
 import ProductCard from "../components/ProductCard/ProductCard"
 
 const Products = () => {
@@ -24,7 +24,7 @@ const Products = () => {
 
     return (
         <div className="my-6">
-            <h1 className="text-3xl">{}</h1>
+            <h1 className="text-3xl">{convertSlugToString(category)}</h1>
             <div className="flex flex-row flex-wrap justify-center">
                 {products &&
                     products.map((product) =>
