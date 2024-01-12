@@ -31,7 +31,7 @@ const MenuItem = ({ link, icon, text, dropdown, children }: MenuItemProps) => {
         >
             <Link
                 to={link}
-                className={`flex flex-col items-center after:absolute after:z-10 after:right-0 after:-bottom-1 after:w-full after:h-[8px] w-24 px-4 py-3 
+                className={`flex flex-col items-center after:absolute after:z-20 after:right-0 after:-bottom-1 after:w-full after:h-[8px] w-24 px-4 py-3 
                     ${isHovered
                         ? "after:bg-white shadow-[0_0_3px_0_rgba(0,0,0,0.2)] rounded-t-md"
                         : ""

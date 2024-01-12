@@ -30,12 +30,11 @@ const NavigationItem = ({ icon, href, text, dropdown, children }: NavigationItem
             }}
             data-testid="navigation-item"
         >
-            <Link to={href} className={`flex flex-col items-center p-4 after:absolute after:z-10 after:right-0 after:-bottom-1 after:w-full after:h-[8px] ${isHovered ? 'bg-white after:bg-white shadow-[0_0_3px_0_rgba(0,0,0,0.2)] rounded-t-md' : ''}`}>
+            <Link to={href} className={`flex flex-col items-center max-w-24 px-5 py-2 ${isHovered ? 'bg-white after:bg-white shadow-[0_0_3px_0_rgba(0,0,0,0.2)] rounded-md' : ''}`}>
                 {icon}
                 <div className="text-base">{text}</div>
             </Link>
-            {dropdown && <Dropdown isOpen={isOpen}>{children}</Dropdown>
-            }
+            {dropdown && <Dropdown isOpen={isOpen}>{children}</Dropdown>}
         </li>
     )
 }
