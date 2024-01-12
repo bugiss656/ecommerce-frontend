@@ -75,7 +75,12 @@ const Root = () => {
                             <Logo src={logo} alt="" />
                         </Link>
                         <SearchBar>
-                            <Input type="text" placeholder="Czego szukasz?" value="" />
+                            <Input 
+                                type="text"
+                                disabled={false} 
+                                placeholder="Czego szukasz?" 
+                                value="" 
+                            />
                         </SearchBar>
                     </div>
 
@@ -193,16 +198,9 @@ const Root = () => {
                                 parentCategories?.map((category: Category) => 
                                     <NavigationItem 
                                         key={category.name}
-                                        href={`kategorie/${category.slug}`} 
+                                        href={`/kategorie/${category.slug}`} 
                                         text={category.name} 
-                                        dropdown={category?.subcategories?.length !== 0 ? true : false}
-                                        children={
-                                            <ul className="p-5">
-                                                {category.subcategories?.map((subcategory: Category) =>
-                                                    <li key={subcategory.name} className="my-2">{subcategory.name}</li>
-                                                )}
-                                            </ul>
-                                        } 
+                                        dropdown={false}
                                     />
                                 )
                             }
