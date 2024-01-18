@@ -1,16 +1,16 @@
 import { UseFormRegister } from "react-hook-form"
 
 
-type InputErrorProps = {
+export interface InputErrorProps extends React.HTMLAttributes<HTMLSpanElement> {
     message: string | undefined
 }
 
-type LabelProps = {
+export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
     htmlFor: string,
     label: string
 }
 
-type InputProps = {
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     type: "button" | "email" | "password" | "submit" | "text" | "number",
     name: string,
     placeholder?: string,
