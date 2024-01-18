@@ -1,112 +1,105 @@
 import { useEffect, useState } from "react"
-import { 
-    useForm,
-    SubmitHandler 
-} from "react-hook-form"
+import { useForm,SubmitHandler } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useNavigate } from "react-router-dom"
-import { useRegister } from "../../hooks/useRegister"
+
 import Button from "../Button/Button"
+import Input, { InputError, Label } from "../Input/Input"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { handleUserRegistration, selectRegistrationError, selectRegistrationStatus } from "../../features/account/registerSlice"
+import { Status } from "../../features/types"
 
 
-type Inputs = {
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
-    // phone: string
-    // re_password: string
-}
+const schema = z.object({
+    firstName: z.string().min(1, { message: 'Pole jest wymagane' }),
+    lastName: z.string().min(1, { message: 'Pole jest wymagane' }),
+    email: z.string().min(1, { message: 'Pole jest wymagane' }).email({ message: 'Niepoprawny adres e-mail' }),
+    password: z.string().min(1, { message: 'Pole jest wymagane' }).min(6, { message: 'Hasło musi posiadać min. 6 znaków' })
+})
+
+export type RegistrationFields = z.infer<typeof schema>
 
 const RegisterForm = () => {
     const navigate = useNavigate()
-    const { register, handleSubmit, reset, setError, formState, formState: { errors } } = useForm<Inputs>()
-    const { register: registerUser, isRegistrationSuccess, error } = useRegister()
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
-        registerUser(data.email, data.password, data.firstName, data.lastName)
-    }
+    const dispatch = useAppDispatch()
+
     const [passwordVisibility, setPasswordVisibility] = useState('password')
 
+    const status = useAppSelector(selectRegistrationStatus)
+    const error = useAppSelector(selectRegistrationError)
+
+    const { register, handleSubmit, reset, setError, formState: { errors } } = useForm<RegistrationFields>({
+        resolver: zodResolver(schema)
+    })
+    
+    const onSubmit: SubmitHandler<RegistrationFields> = (data) => {
+        dispatch(handleUserRegistration({ 
+            email: data.email, 
+            password: data.password, 
+            firstName: data.firstName, 
+            lastName: data.lastName 
+        }))
+    }
+
     useEffect(() => {
-        if (isRegistrationSuccess) {
+        if (status === Status.SUCCEEDED) {
             reset()
             navigate('/logowanie')
         }
-    }, [isRegistrationSuccess])
+    }, [status])
 
     useEffect(() => {
-        if (error) {
+        if (status === Status.FAILED) {
             setError("email", { type: 'alreadyExists', message: error })
         }
-    }, [error])
+    }, [status])
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-1/3 p-5 shadow-md rounded-sm" data-testid="register-form">
             <h1 className="text-[30px] font-bold mb-3">Zarejestruj się</h1>
-
-            <div className="relative flex flex-col my-6">
-                <label htmlFor="firstName" className="absolute -top-6 left-0">Imię</label>
-                <input 
-                    type="text" 
-                    role="input"
-                    id="firstName"
-                    className="border rounded-full px-4 py-2 focus:outline-0" 
-                    autoComplete="off" 
+            <div className="relative flex flex-col my-3">
+                <Label htmlFor="firstName" label="Imię" />
+                <Input
+                    type="text"
+                    name="firstName"
+                    autoComplete="off"
                     data-testid="firstName"
-                    {...register("firstName", { required: true })} 
+                    register={register}
                 />
-                {errors.firstName?.type === 'required' && <span className="text-sm text-red-500">Pole jest wymagane</span>}
+                {errors.firstName ? <InputError message={errors.firstName.message} /> : null}
             </div>
-
-            <div className="relative flex flex-col my-6">
-                <label htmlFor="lastName" className="absolute -top-6 left-0">Nazwisko</label>
-                <input 
-                    type="text" 
-                    role="input"
-                    id="lastName"
-                    className="border rounded-full px-4 py-2 focus:outline-0" 
-                    autoComplete="off" 
+            <div className="relative flex flex-col my-3">
+                <Label htmlFor="lastName" label="Nazwisko" />
+                <Input
+                    type="text"
+                    name="lastName"
+                    autoComplete="off"
                     data-testid="lastName"
-                    {...register("lastName", { required: true })} 
+                    register={register}
                 />
-                {errors.lastName?.type === 'required' && <span className="text-sm text-red-500">Pole jest wymagane</span>}
+                {errors.lastName ? <InputError message={errors.lastName.message} /> : null}
             </div>
-
-            <div className="relative flex flex-col my-6">
-                <label htmlFor="email" className="absolute -top-6 left-0">E-mail</label>
-                <input 
-                    type="text" 
-                    role="input"
-                    id="email"
-                    className="border rounded-full px-4 py-2 focus:outline-0" 
-                    autoComplete="off" 
+            <div className="relative flex flex-col my-3">
+                <Label htmlFor="email" label="E-mail" />
+                <Input
+                    type="email"
+                    name="email"
+                    autoComplete="off"
                     data-testid="email"
-                    {...register("email", { 
-                        required: true, 
-                        pattern: {
-                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                            message: "Niepoprawny adres email"
-                        }
-                    })}
+                    register={register}
                 />
-                {errors.email?.type === 'required' && <span className="text-sm text-red-500">Pole jest wymagane</span>}
-                {errors.email?.type === 'pattern' && <span className="text-sm text-red-500">{errors.email.message}</span>}
-                {errors.email?.type === 'alreadyExists' && <span className="text-sm text-red-500">{errors.email.message}</span>}
+                {errors.email ? <InputError message={errors.email.message} /> : null}
             </div>
-
-            <div className="relative my-6">
-                <label htmlFor="password" className="absolute -top-6 left-0">Hasło</label>
+            <div className="relative my-3">
+                <Label htmlFor="password" label="Hasło" />
                 <div className="relative flex flex-col">
-                    <input 
-                        type={passwordVisibility} 
-                        role="input"
-                        id="password"
-                        className="border rounded-full px-4 py-2 focus:outline-0" 
+                    <Input
+                        type={passwordVisibility as "text" | "password"}
+                        name="password"
                         autoComplete="off"
-                        data-testid="password" 
-                        {...register("password", { 
-                            required: true,
-                            minLength: 6
-                        })} 
+                        data-testid="password"
+                        register={register} 
                     />
                     <div className="absolute top-1/2 right-5 -translate-y-1/2">
                         {passwordVisibility === "password" ?
@@ -121,7 +114,7 @@ const RegisterForm = () => {
                         }
                     </div>
                 </div>
-                {errors.password?.type === 'required' && <span className="text-sm text-red-500">Pole jest wymagane</span>}
+                {errors.password ? <InputError message={errors.password.message} /> : null}
                 {errors.password?.type === 'minLength' && <span className="text-sm text-red-500">Hasło musi mieć min. 6 znaków</span>}
             </div>
 
