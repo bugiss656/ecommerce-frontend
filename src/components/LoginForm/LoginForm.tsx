@@ -4,9 +4,14 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { handleUserLogin, selectLoginError, selectLoginStatus, selectToken } from "../../features/account/loginSlice"
+import { 
+    handleUserLogin, 
+    selectLoginError, 
+    selectLoginStatus, 
+    selectToken 
+} from "../../features/account/loginSlice"
 
-import Input, { InputError } from "../Input/Input"
+import Input, { InputError, Label } from "../Input/Input"
 import Button from "../Button/Button"
 
 
@@ -34,7 +39,10 @@ const LoginForm = () => {
     const token = useAppSelector(selectToken)
     
     const onSubmit: SubmitHandler<FormFields> = (data) => {
-        dispatch(handleUserLogin({ email: data.email, password: data.password }))
+        dispatch(handleUserLogin({ 
+            email: data.email, 
+            password: data.password 
+        }))
     }
 
     useEffect(() => {
@@ -59,22 +67,22 @@ const LoginForm = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-1/3 p-5 shadow-primary rounded-sm" data-testid="login-form">
             <h1 className="text-[30px] font-bold mb-3" data-testid="form-heading">Zaloguj się</h1>
             <div className="my-3">
+                <Label htmlFor="email" label="E-mail" />
                 <Input
                     type="email"
                     name="email"
-                    label="E-mail"
-                    errors={errors}
                     register={register}
                 />
+                {errors.email ? <InputError message={errors.email.message} /> : null}
             </div>
             <div className="my-3">
+                <Label htmlFor="password" label="Hasło" />
                 <Input
                     type="password"
                     name="password"
-                    label="Password"
-                    errors={errors}
                     register={register}
                 />
+                {errors.password ? <InputError message={errors.password.message} /> : null}
             </div>
             {errors.root ? <InputError message={errors.root.message} /> : null}
             <Button 
