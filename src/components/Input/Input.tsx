@@ -5,13 +5,16 @@ type InputErrorProps = {
     message: string | undefined
 }
 
+type LabelProps = {
+    htmlFor: string,
+    label: string
+}
+
 type InputProps = {
     type: "button" | "email" | "password" | "submit" | "text" | "number",
     name: string,
-    label?: string,
     placeholder?: string,
-    errors: any,
-    register: UseFormRegister<any>
+    register: UseFormRegister<any>,
 }
 
 export const InputError = ({ message }: InputErrorProps) => {
@@ -20,18 +23,21 @@ export const InputError = ({ message }: InputErrorProps) => {
     )
 }
 
+export const Label = ({ htmlFor, label }: LabelProps) => {
+    return (
+        <label htmlFor={htmlFor}>{label}</label>
+    )
+}
+
 const Input = ({ 
     type, 
     name, 
-    label, 
     placeholder, 
     register, 
-    errors, 
     ...props 
 }: InputProps) => {
     return (
         <>
-            <label htmlFor={name}>{label}</label>
             <input 
                 id={name}
                 className="border rounded w-full px-3 py-2 focus:outline-none focus:shadow-md"
@@ -41,7 +47,6 @@ const Input = ({
                 {...register(name)}
                 {...props}
             />
-            {errors[name] ? <InputError message={errors[name].message} />  : null}
         </>
     )
 }
