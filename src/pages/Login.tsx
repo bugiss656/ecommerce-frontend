@@ -28,7 +28,7 @@ const Login = () => {
                         href="/rejestracja"
                         text="Załóż konto"
                     />
-                    <h2 className="text-[20px] font-bold">Dla czego warto mieć konto na ecommerce</h2>
+                    <h2 className="text-[20px] font-bold">Dla czego warto mieć konto na ecommerce:</h2>
                     <div className="flex flex-col my-3">
                         <div className="my-3">
                             <span></span>
