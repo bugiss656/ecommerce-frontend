@@ -1,6 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useParams } from "react-router-dom"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { z } from "zod"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
+
+import { Status } from "../features/types"
+
 import { 
     clearProductState,
     fetchProductDetail, 
@@ -9,20 +14,36 @@ import {
     selectSingleProductStatus 
 } from "../features/products/productDetailSlice"
 
-import Input from "../components/Input/Input"
+import Input, { InputError } from "../components/Input/Input"
 import Button from "../components/Button/Button"
 import ImageGallery from "../components/ImageGallery/ImageGallery"
-import { Status } from "../features/types"
+import { zodResolver } from "@hookform/resolvers/zod"
 
+
+const schema = z.object({
+    quantity: z.coerce.number().min(1, { message: 'Minimalna ilość produktów 1'}).max(99, { message: 'Ilość nie może być większa niż 99' })
+})
+
+type QuantityField = z.infer<typeof schema>
 
 const ProductDetail = () => {
     const { slug } = useParams()
     const dispatch = useAppDispatch()
-    const [quantity, setQuantity] = useState<number>(1)
+
+    const { register, handleSubmit, formState: { errors } } = useForm<QuantityField>({
+        defaultValues: {
+            quantity: 1
+        },
+        resolver: zodResolver(schema)
+    })
 
     const productStatus = useAppSelector(selectSingleProductStatus)
     const productError = useAppSelector(selectSingleProductError)
     const product = useAppSelector(selectSingleProduct)
+
+    const onSubmit: SubmitHandler<QuantityField> = (data) => {
+        console.log(data.quantity, typeof data.quantity)
+    }
 
     useEffect(() => {
         dispatch(clearProductState())
@@ -60,16 +81,17 @@ const ProductDetail = () => {
                             <p className="text-green-600 mt-1">Dostępny w magazynie</p> :
                             <p className="text-red-600 mt-1">Produkt niedostępny</p>
                         }
-                        <form>
+                        <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="mt-3">
                                 <Input
                                     type="number"
+                                    name="quantity"
+                                    register={register}
                                     disabled={product.stock_quantity <= 0 && true}
-                                    value={quantity}
                                     min="1"
                                     max="99"
-                                    onChange={(e: any) => setQuantity(e.target.value)}
                                 />
+                                {errors.quantity ? <InputError message={errors.quantity.message} /> : null}
                             </div>
                             <Button
                                 className="rounded-full text-white w-full py-3 mt-5 bg-green-500 hover:bg-green-600"
