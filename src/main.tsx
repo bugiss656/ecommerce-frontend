@@ -22,6 +22,7 @@ import { setupStore } from './app/store'
 import Categories from './pages/Categories'
 import Products from './pages/Products'
 import ProductDetail from './pages/ProductDetail'
+import AccountSettings from './pages/AccountSettings'
 
 
 const router = createBrowserRouter([
@@ -57,8 +58,8 @@ const router = createBrowserRouter([
                         element: <ShoppingLists />
                     },
                     {
-                        path: 'ustawienia',
-                        element: null
+                        path: 'ustawienia-konta',
+                        element: <AccountSettings />
                     }
                 ]
             },
