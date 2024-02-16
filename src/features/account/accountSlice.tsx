@@ -2,13 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import api from "../../api"
 import { RootState } from "../../app/store"
 import { Status } from "../types"
+import { Account } from "./types"
 
-
-type Account = {
-    email: string,
-    first_name: string,
-    last_name: string
-}
 
 interface AccountState {
     status: Status,
@@ -16,16 +11,16 @@ interface AccountState {
     account: Account | undefined
 }
 
-export const fetchAccountData = createAsyncThunk('account/fetchAccountData', async () => {
-    const response = await api.get('customers/user')
-    return response.data
-})
-
 const initialState: AccountState = {
     status: Status.IDLE,
     error: undefined,
     account: undefined
 }
+
+export const fetchAccountData = createAsyncThunk('account/fetchAccountData', async () => {
+    const response = await api.get('customers/user')
+    return response.data
+})
 
 export const accountSlice = createSlice({
     name: 'account',
@@ -33,7 +28,7 @@ export const accountSlice = createSlice({
     reducers: {},
     extraReducers(builder) {
         builder
-            .addCase(fetchAccountData.pending, (state, action) => {
+            .addCase(fetchAccountData.pending, (state) => {
                 state.status = Status.LOADING
             })
             .addCase(fetchAccountData.fulfilled, (state, action) => {
