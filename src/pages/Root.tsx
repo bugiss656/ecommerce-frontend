@@ -25,10 +25,22 @@ import { selectAccountStatus, selectAccountError, fetchAccountData } from "../fe
 import { handleUserLogout } from "../features/account/loginSlice"
 import { AccountMenu, AccountMenuItem } from "../components/AccountMenu/AccountMenu"
 import { Category, fetchCategories, selectCategories, selectCategoriesError, selectCategoriesStatus } from "../features/categories/categoriesSlice"
+import { useForm } from "react-hook-form"
 
+
+type SearchForm = {
+    text: string
+}
 
 const Root = () => {
     const dispatch = useAppDispatch()
+
+    const { register, handleSubmit, formState: { errors } } = useForm<SearchForm>({
+        defaultValues: {
+            
+        }
+    })
+
     const accountStatus = useAppSelector(selectAccountStatus)
     const accountError = useAppSelector(selectAccountError)
     const account = useAppSelector(selectAccount)
@@ -60,11 +72,11 @@ const Root = () => {
         dispatch(fetchCategories())
     }, [dispatch])
 
-    useEffect(() => {
-        if (localStorage.getItem('authToken')) {
-            console.log(account)
-        }
-    }, [accountStatus])
+    // useEffect(() => {
+    //     if (localStorage.getItem('authToken')) {
+    //         console.log(account)
+    //     }
+    // }, [accountStatus])
 
     return (
         <>
@@ -77,9 +89,9 @@ const Root = () => {
                         <SearchBar>
                             <Input 
                                 type="text"
-                                disabled={false} 
+                                name="searchText"
                                 placeholder="Czego szukasz?" 
-                                value="" 
+                                register={register}
                             />
                         </SearchBar>
                     </div>
