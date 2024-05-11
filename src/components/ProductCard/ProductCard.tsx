@@ -11,7 +11,7 @@ type ProductCardProps = {
 
 const ProductCard = ({ image, title, href, availability, price }: ProductCardProps) => {
     return (
-        <Link to={href} className="flex flex-col items-center p-5 m-3 hover:shadow-secondary hover:rounded-md">
+        <Link to={href} className="flex flex-col items-center p-3 m-3 hover:shadow-secondary hover:rounded-md">
             <div className="mb-5">
                 <img src={image} alt={title} />
             </div>
