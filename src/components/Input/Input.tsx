@@ -11,10 +11,10 @@ export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> 
 }
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-    type: "button" | "email" | "password" | "submit" | "text" | "number",
+    type: "button" | "email" | "password" | "submit" | "text" | "number" | "checkbox",
     name: string,
     placeholder?: string,
-    register: UseFormRegister<any>,
+    register?: UseFormRegister<any>,
 }
 
 export const InputError = ({ message }: InputErrorProps) => {
@@ -23,9 +23,9 @@ export const InputError = ({ message }: InputErrorProps) => {
     )
 }
 
-export const Label = ({ htmlFor, label }: LabelProps) => {
+export const Label = ({ htmlFor, label, ...props }: LabelProps) => {
     return (
-        <label htmlFor={htmlFor}>{label}</label>
+        <label htmlFor={htmlFor} {...props}>{label}</label>
     )
 }
 
@@ -33,6 +33,8 @@ const Input = ({
     type, 
     name, 
     placeholder, 
+    min,
+    max,
     register, 
     ...props 
 }: InputProps) => {
@@ -42,9 +44,12 @@ const Input = ({
                 id={name}
                 className="border rounded w-full px-3 py-2 focus:outline-none focus:shadow-md"
                 type={type}
+                name={name}
                 role="input"
+                min={min}
+                max={max}
                 placeholder={placeholder}
-                {...register(name)}
+                {...(register && register(name))}
                 {...props}
             />
         </>
