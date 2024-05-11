@@ -2,12 +2,23 @@
 
 export interface Supplier {
     id: string,
-    name: string
+    name: string,
+    products_count: number
 }
 
 export interface Image {
     alt: string,
     image: string
+}
+
+export interface Attribute {
+    name: string,
+    display_name: string,
+    values: [
+        {
+            value: string
+        }
+    ]
 }
 
 export interface Product {
