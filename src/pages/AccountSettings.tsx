@@ -27,6 +27,7 @@ import { selectUpdatePasswordError, selectUpdatePasswordStatus } from "../featur
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Status } from "../features/types"
+import Alert from "../components/Alert/Alert"
 
 
 const accountFormSchema = z
@@ -97,6 +98,8 @@ const AccountSettings = () => {
     const [isAccountDataModalOpen, setIsAccountDataModalOpen] = useState(false)
     const [isEmailModalOpen, setIsEmailModalOpen] = useState(false)
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
+
+    const [isAlertActive, setIsAlertActive] = useState(false)
 
     const [currentPasswordVisibility, setCurrentPasswordVisibility] = useState('password')
     const [newPasswordVisibility, setNewPasswordVisibility] = useState('password')
@@ -178,6 +181,7 @@ const AccountSettings = () => {
 
         setIsAccountDataModalOpen(false)
         resetAccountForm()
+        setIsAlertActive(true)
     }
 
     const onEmailFormSubmit: SubmitHandler<emailFormFields> = async (data: { currentEmail: string, newEmail: string, confirmPassword: string }) => {
@@ -220,6 +224,7 @@ const AccountSettings = () => {
 
             setIsEmailModalOpen(false)
             resetEmailForm()
+            setIsAlertActive(true)
         } else if (checkPasswordStatus === Status.FAILED) {
             console.error('Password check failed')
             setEmailError('confirmPassword', { type: 'currentPasswordCheck', message: 'Wprowadzone obecne hasło jest niepoprawne' })
@@ -238,6 +243,7 @@ const AccountSettings = () => {
 
             setIsPasswordModalOpen(false)
             resetPasswordForm()
+            setIsAlertActive(true)
         } else if (checkPasswordStatus === Status.FAILED) {
             console.error('Password check failed')
             setPasswordError('root', { type: 'currentPasswordCheck', message: 'Wprowadzone obecne hasło jest niepoprawne' })
@@ -247,6 +253,14 @@ const AccountSettings = () => {
     return (
         <>
             <h1 className="text-3xl mb-8 font-medium">Ustawienia konta</h1>
+
+            {isAlertActive && 
+                <Alert 
+                    type="success" 
+                    message="Pomyślnie zaaktualizowano dane konta." 
+                    onClick={() => setIsAlertActive(false)}
+                />
+            }
 
             <h1 className="text-2xl mb-4">Dane konta</h1>
 
