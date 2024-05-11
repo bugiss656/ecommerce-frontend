@@ -16,10 +16,10 @@ const initialState: ProductsState = {
     products: null
 }
 
-export const fetchProducts = createAsyncThunk<Product[], { category: string | undefined }>(
+export const fetchProducts = createAsyncThunk<Product[], { url: string }>(
     'products/fetchProducts', 
-    async ({ category }) => {
-        const response = await api.get(`products/${category}`)
+    async ({ url }) => {
+        const response = await api.get(url)
         return response.data
     }
 )
@@ -31,6 +31,7 @@ export const productsSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(fetchProducts.pending, (state) => {
+                state.products = null
                 state.status = 'loading'
             })
             .addCase(fetchProducts.fulfilled, (state, action) => {
