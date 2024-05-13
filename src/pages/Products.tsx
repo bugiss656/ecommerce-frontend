@@ -41,6 +41,8 @@ import Input, { Label } from "../components/Input/Input"
 import { Status } from "../features/types"
 import ActiveFilter from "../components/ActiveFilters/ActiveFilter"
 import ActiveFilterItem from "../components/ActiveFilters/ActiveFilterItem"
+import Loader from "../components/Loader/Loader"
+import OverlayLoading from "../components/OverlayLoading/OverlayLoading"
 
 
 const Products = () => {
@@ -253,142 +255,149 @@ const Products = () => {
     return (
         <div className="my-6">
             <h1 className="text-3xl">{convertSlugToString(category)}</h1>
-            <div className="flex flex-row justify-center w-full my-6">
-                <div className="filters w-[20%]">
-                    <div className="flex flex-row items-center">
+            <hr className="my-3" />
+            <div className="flex flex-row justify-center w-full">
+                <div className="filters w-[25%]">
+                    <div className="flex flex-row items-center mb-5">
                         <CiFilter className="text-lg" />
                         <h1 className="text-lg font-medium">Filtry</h1>
                     </div>
-                    <h1 className="text-lg font-medium">Producent</h1>
-                    {suppliers &&
-                        suppliers.map((supplier) =>
-                            <div key={supplier.name} className="flex flex-row justify-start items-left">
-                                <div className="flex flex-row justify-start items-center my-1">
-                                    <Input
-                                        className="filter-input mx-2"
-                                        type="checkbox"
-                                        name={supplier.name}
-                                        value={supplier.name}
-                                        data-filter-name="supplier"
-                                        onChange={(event) => {
-                                            const { checked } = event.target
+                    <div className="mb-5">
+                        <h1 className="text-lg font-medium">Producent</h1>
+                        {suppliers &&
+                            suppliers.map((supplier) =>
+                                <div key={supplier.name} className="flex flex-row justify-start items-left">
+                                    <div className="flex flex-row justify-start items-center my-1">
+                                        <Input
+                                            className="filter-input mx-2"
+                                            type="checkbox"
+                                            name={supplier.name}
+                                            value={supplier.name}
+                                            data-filter-name="supplier"
+                                            onChange={(event) => {
+                                                const { checked } = event.target
 
-                                            if (checked) {
-                                                addSearchParamOnChange(event)
-                                                addActiveFilterOnChange(event)
-                                            } else {
-                                                removeSearchParamOnChange(event)
-                                                removeActiveFilterOnChange(event)
-                                            }
-                                        }}
-                                    />
-                                    <Label
-                                        htmlFor={supplier.name}
-                                        label={`${supplier.name} (${supplier.products_count})`}
-                                        className="text-lg"
-                                    />
-                                </div>
-                            </div>
-                        )
-                    }
-                    <h1 className="text-lg font-medium">Przedział cenowy</h1>
-                    <div className="flex flex-row">
-                        <Input
-                            className="filter-input mx-2 w-24"
-                            type="number"
-                            min={1}
-                            max={99999}
-                            name="priceMin"
-                            placeholder="od"
-                            data-filter-name="priceMin"
-                            onBlur={(event) => {
-                                const { value } = event.target
-
-                                if (value === '') return
-                                if (Number(value) > 0) {
-                                    addSearchParamOnChange(event)
-                                    addActiveFilterOnChange(event)
-                                } else if (value === '') {
-                                    removeSearchParamOnChange(event)
-                                    removeActiveFilterOnChange(event)
-                                }
-                            }}
-                        />
-                        <Input
-                            className="filter-input mx-2 w-24"
-                            type="number"
-                            min={1}
-                            max={99999}
-                            name="priceMax"
-                            placeholder="do"
-                            data-filter-name="priceMax"
-                            onBlur={(event) => {
-                                const { value } = event.target
-                                if (value === '') return
-                                if (Number(value) > 0) {
-                                    addSearchParamOnChange(event)
-                                    addActiveFilterOnChange(event)
-                                } else {
-                                    removeSearchParamOnChange(event)
-                                    removeActiveFilterOnChange(event)
-                                }
-                            }}
-                        />
-                    </div>
-                    {attributes && (
-                        attributes.map((attribute) => (
-                            <Fragment key={attribute.display_name}>
-                                <h1 className="text-lg font-medium">{attribute.display_name}</h1>
-                                {attribute.values.map((value) => (
-                                    <div key={value.value} className="flex flex-row justify-start items-left">
-                                        <div className="flex flex-row justify-start items-center my-1">
-                                            <Input 
-                                                className="filter-input mx-2"
-                                                type="checkbox"
-                                                name={value.value}
-                                                value={value.value}
-                                                data-filter-name={attribute.name}
-                                                onBlur={(event) => {
-                                                    const { type, value } = event.target
-
-                                                    if (type === 'text' || type === 'number') {
-                                                        if (value === '') return
-                                                        if (Number(value) > 0) {
-                                                            addSearchParamOnChange(event)
-                                                            addActiveFilterOnChange(event)
-                                                        } else {
-                                                            removeSearchParamOnChange(event)
-                                                            removeActiveFilterOnChange(event)
-                                                        }
-                                                    }
-                                                }}
-                                                onChange={(event) => {
-                                                    const { type, checked } = event.target
-
-                                                    if (type === 'checkbox') {
-                                                        if (checked) {
-                                                            addSearchParamOnChange(event)
-                                                            addActiveFilterOnChange(event)
-                                                        } else {
-                                                            removeSearchParamOnChange(event)
-                                                            removeActiveFilterOnChange(event)
-                                                        }
-                                                    }
-                                                }}
-                                            />
-                                            <Label
-                                                htmlFor={value.value}
-                                                label={value.value}
-                                                className="text-lg"
-                                            />
-                                        </div>
+                                                if (checked) {
+                                                    addSearchParamOnChange(event)
+                                                    addActiveFilterOnChange(event)
+                                                } else {
+                                                    removeSearchParamOnChange(event)
+                                                    removeActiveFilterOnChange(event)
+                                                }
+                                            }}
+                                        />
+                                        <Label
+                                            htmlFor={supplier.name}
+                                            label={`${supplier.name} (${supplier.products_count})`}
+                                            className="text-lg"
+                                        />
                                     </div>
-                                ))}
-                            </Fragment> 
-                        ))
-                    )}
+                                </div>
+                            )
+                        }
+                    </div>
+                    <div className="mb-5">
+                        <h1 className="text-lg font-medium">Przedział cenowy</h1>
+                        <div className="flex flex-row">
+                            <Input
+                                className="filter-input p-2 mx-2 w-32 border-[1px] border-black rounded-md"
+                                type="number"
+                                min={1}
+                                max={99999}
+                                name="priceMin"
+                                placeholder="od"
+                                data-filter-name="priceMin"
+                                onBlur={(event) => {
+                                    const { value } = event.target
+
+                                    if (value === '') return
+                                    if (Number(value) > 0) {
+                                        addSearchParamOnChange(event)
+                                        addActiveFilterOnChange(event)
+                                    } else if (value === '') {
+                                        removeSearchParamOnChange(event)
+                                        removeActiveFilterOnChange(event)
+                                    }
+                                }}
+                            />
+                            <Input
+                                className="filter-input p-2 mx-2 w-32 border-[1px] border-black rounded-md"
+                                type="number"
+                                min={1}
+                                max={99999}
+                                name="priceMax"
+                                placeholder="do"
+                                data-filter-name="priceMax"
+                                onBlur={(event) => {
+                                    const { value } = event.target
+                                    if (value === '') return
+                                    if (Number(value) > 0) {
+                                        addSearchParamOnChange(event)
+                                        addActiveFilterOnChange(event)
+                                    } else {
+                                        removeSearchParamOnChange(event)
+                                        removeActiveFilterOnChange(event)
+                                    }
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <div className="mb-5">
+                        {attributes && (
+                            attributes.map((attribute) => (
+                                <Fragment key={attribute.display_name}>
+                                    <h1 className="text-lg font-medium">{attribute.display_name}</h1>
+                                    {attribute.values.map((value) => (
+                                        <div key={value.value} className="flex flex-row justify-start items-left">
+                                            <div className="flex flex-row justify-start items-center my-1">
+                                                <Input 
+                                                    className="filter-input mx-2"
+                                                    type="checkbox"
+                                                    name={value.value}
+                                                    value={value.value}
+                                                    data-filter-name={attribute.name}
+                                                    onBlur={(event) => {
+                                                        const { type, value } = event.target
+
+                                                        if (type === 'text' || type === 'number') {
+                                                            if (value === '') return
+                                                            if (Number(value) > 0) {
+                                                                addSearchParamOnChange(event)
+                                                                addActiveFilterOnChange(event)
+                                                            } else {
+                                                                removeSearchParamOnChange(event)
+                                                                removeActiveFilterOnChange(event)
+                                                            }
+                                                        }
+                                                    }}
+                                                    onChange={(event) => {
+                                                        const { type, checked } = event.target
+
+                                                        if (type === 'checkbox') {
+                                                            if (checked) {
+                                                                addSearchParamOnChange(event)
+                                                                addActiveFilterOnChange(event)
+                                                            } else {
+                                                                removeSearchParamOnChange(event)
+                                                                removeActiveFilterOnChange(event)
+                                                            }
+                                                        }
+                                                    }}
+                                                />
+                                                <Label
+                                                    htmlFor={value.value}
+                                                    label={value.value}
+                                                    className="text-lg"
+                                                />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </Fragment> 
+                            ))
+                        )}
+                    </div>
                 </div>
-                <div className="flex flex-col w-[80%]">
+                <div className="flex flex-col w-[75%]">
                     <div className="flex flex-row">
                         {Object.entries(activeFilters).map(([key, values]: any) => (
                             <ActiveFilter key={key} name={key}>
@@ -419,7 +428,7 @@ const Products = () => {
                             </ActiveFilter>
                         ))}
                     </div>
-                    <div className="flex justify-center">
+                    <div className="flex justify-center relative">
                         <div className="flex flex-row flex-wrap justify-left">
                             {products && (
                                 <>
@@ -436,8 +445,15 @@ const Products = () => {
                                 </>
                             )}
                         </div>
+                        {productsStatus === Status.LOADING && (
+                            <>
+                                <OverlayLoading />
+                                <div className="flex flex-col absolute z-20 justify-center items-center w-full h-full">
+                                    <Loader />
+                                </div>
+                            </>
+                        )}
                     </div>
-                    
                 </div>
             </div>
         </div>
