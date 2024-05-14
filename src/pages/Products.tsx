@@ -448,7 +448,7 @@ const Products = () => {
                         {productsStatus === Status.LOADING && (
                             <>
                                 <OverlayLoading />
-                                <div className="flex flex-col absolute z-20 justify-center items-center w-full h-full">
+                                <div className="absolute top-20 left-[50%] -translate-x-1/2 z-20">
                                     <Loader />
                                 </div>
                             </>
