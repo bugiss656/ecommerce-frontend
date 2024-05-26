@@ -43,6 +43,7 @@ import ActiveFilter from "../components/ActiveFilters/ActiveFilter"
 import ActiveFilterItem from "../components/ActiveFilters/ActiveFilterItem"
 import Loader from "../components/Loader/Loader"
 import OverlayLoading from "../components/OverlayLoading/OverlayLoading"
+import { Option, Select } from "../components/Select/Select"
 
 
 const Products = () => {
@@ -66,7 +67,7 @@ const Products = () => {
     const products = useAppSelector(selectProducts)
     
 
-    const addSearchParamOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const addSearchParamOnChange = (event: any) => {
         const { type, value, dataset } = event.target
         const param = dataset.filterName as string
 
@@ -83,7 +84,7 @@ const Products = () => {
         })
     }
 
-    const removeSearchParamOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const removeSearchParamOnChange = (event: any) => {
         const { type, value, dataset } = event.target
         const param = dataset.filterName as string
 
@@ -139,10 +140,12 @@ const Products = () => {
             const updatedState = { ...prevState }
 
             params?.forEach(([key, value]: [string, string]) => {
-                if (!updatedState[key]) {
-                    updatedState[key] = [value]
-                } else if (!updatedState[key].includes(value)) {
-                    updatedState[key] = [...updatedState[key], value]
+                if (key !== 'sorting') {
+                    if (!updatedState[key]) {
+                        updatedState[key] = [value]
+                    } else if (!updatedState[key].includes(value)) {
+                        updatedState[key] = [...updatedState[key], value]
+                    }
                 }
             })
             return updatedState
@@ -226,6 +229,11 @@ const Products = () => {
             })
         })
     }
+
+    const setSelectInputOption = (option: string) => {
+        const select = document.querySelector<HTMLSelectElement>('#sort-select')
+        select!.value = option
+    }
     
     useEffect(() => {
         dispatch(fetchSuppliers({ category: category }))
@@ -250,18 +258,69 @@ const Products = () => {
 
     useEffect(() => {
         addActiveFilters()
+        setSelectInputOption(searchParams.get('sorting') as string)
     }, [])
 
     return (
         <div className="my-6">
             <h1 className="text-3xl">{convertSlugToString(category)}</h1>
+            <div className="flex flex-row justify-between items-center my-4">
+                <div className="flex flex-row items-center py-3">
+                    <CiFilter className="text-lg" />
+                    <h1 className="text-lg font-medium">Filtry</h1>
+                </div>
+                <div className="flex flex-row">
+                    {Object.entries(activeFilters).map(([key, values]: any) => (
+                        <ActiveFilter key={key} name={key}>
+                            {Array.isArray(values) ? (
+                                (values as string[]).map((item: string, idx) => (
+                                    <ActiveFilterItem
+                                        key={idx}
+                                        text={item}
+                                        onClick={() => {
+                                            removeSearchParamOnClick(key, item)
+                                            removeActiveFilterOnClick(key, item)
+                                            removeInputFromFiltering(item)
+                                            removeInputFromFiltering(key)
+                                        }}
+                                    />
+                                ))
+                            ) : (
+                                <ActiveFilterItem
+                                    text={values}
+                                    onClick={() => {
+                                        removeSearchParamOnClick(key, values)
+                                        removeActiveFilterOnClick(key, values)
+                                        removeInputFromFiltering(values)
+                                        removeInputFromFiltering(key)
+                                    }}
+                                />
+                            )}
+                        </ActiveFilter>
+                    ))}
+                </div>
+                <Select 
+                    name="sorting-order"
+                    id="sort-select"
+                    onChange={(event) => {
+                        if (event.target.value === 'clear') {
+                            removeSearchParamOnChange(event)
+                        } else {
+                            addSearchParamOnChange(event)
+                        }
+                    }}
+                    data-filter-name="sorting"
+                >
+                    <Option value="clear" text="Wybierz kolejność" />
+                    <Option value="pra" text="najtańsze" />
+                    <Option value="prd" text="najdroższe" />
+                    <Option value="ala" text="alfabetycznie A-Z" />
+                    <Option value="ald" text="alfabetycznie Z-A" />
+                </Select>
+            </div>
             <hr className="my-3" />
             <div className="flex flex-row justify-center w-full">
                 <div className="filters w-[25%]">
-                    <div className="flex flex-row items-center mb-5">
-                        <CiFilter className="text-lg" />
-                        <h1 className="text-lg font-medium">Filtry</h1>
-                    </div>
                     <div className="mb-5">
                         <h1 className="text-lg font-medium">Producent</h1>
                         {suppliers &&
@@ -398,36 +457,6 @@ const Products = () => {
                     </div>
                 </div>
                 <div className="flex flex-col w-[75%]">
-                    <div className="flex flex-row">
-                        {Object.entries(activeFilters).map(([key, values]: any) => (
-                            <ActiveFilter key={key} name={key}>
-                                {Array.isArray(values) ? (
-                                    (values as string[]).map((item: string, idx) => (
-                                        <ActiveFilterItem
-                                            key={idx}
-                                            text={item}
-                                            onClick={() => {
-                                                removeSearchParamOnClick(key, item)
-                                                removeActiveFilterOnClick(key, item)
-                                                removeInputFromFiltering(item)
-                                                removeInputFromFiltering(key)
-                                            }}
-                                        />
-                                    ))
-                                ) : (
-                                    <ActiveFilterItem
-                                            text={values}
-                                            onClick={() => {
-                                                removeSearchParamOnClick(key, values)
-                                                removeActiveFilterOnClick(key, values)
-                                                removeInputFromFiltering(values)
-                                                removeInputFromFiltering(key)
-                                            }}
-                                        />
-                                )}
-                            </ActiveFilter>
-                        ))}
-                    </div>
                     <div className="flex justify-center relative">
                         <div className="flex flex-row flex-wrap justify-left">
                             {products && (
