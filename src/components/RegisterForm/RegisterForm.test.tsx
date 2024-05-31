@@ -1,12 +1,18 @@
 import { describe, it } from "vitest"
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
+import { 
+    fireEvent, 
+    screen, 
+    waitFor, 
+    within 
+} from "@testing-library/react"
 
 import RegisterForm from "./RegisterForm"
 import { BrowserRouter } from "react-router-dom"
+import { renderWithProviders } from "../../utils/test-utils"
 
 
 const setup = () => {
-    render(
+    renderWithProviders(
         <BrowserRouter>
             <RegisterForm />
         </BrowserRouter>
@@ -14,7 +20,7 @@ const setup = () => {
 
     const registerForm = screen.getByTestId('register-form')
     const inputs = within(registerForm).getAllByRole('input')
-    const submitButton = screen.getByRole('button')
+    const submitButton = screen.getByTestId('submitButton')
     const email = screen.getByTestId('email')
     const password = screen.getByTestId('password')
     
@@ -54,7 +60,7 @@ describe('RegisterForm tests', () => {
         fireEvent.click(submitButton)
 
         await waitFor(() => {
-            const errorMessage = screen.getByText(/niepoprawny adres email/i)
+            const errorMessage = screen.getByText(/niepoprawny adres e-mail/i)
             expect(errorMessage).toBeInTheDocument()
         })
     })
@@ -66,7 +72,7 @@ describe('RegisterForm tests', () => {
         fireEvent.click(submitButton)
 
         await waitFor(() => {
-            const errorMessage = screen.getByText(/hasło musi mieć min. 6 znaków/i)
+            const errorMessage = screen.getByText(/hasło musi posiadać min. 6 znaków/i)
             expect(errorMessage).toBeInTheDocument()
         })
     })

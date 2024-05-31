@@ -83,7 +83,7 @@ const RegisterForm = () => {
             <div className="relative flex flex-col my-3">
                 <Label htmlFor="email" label="E-mail" />
                 <Input
-                    type="email"
+                    type="text"
                     name="email"
                     autoComplete="off"
                     data-testid="email"
@@ -119,9 +119,10 @@ const RegisterForm = () => {
             </div>
 
             <Button 
-                className="rounded-full text-white w-full mt-3 py-3 bg-green-500 hover:bg-green-600" 
+                className="rounded-full text-white w-full mt-3 py-3 bg-green-500 hover:bg-green-600"
+                data-testid="submitButton"
                 type="submit"             
-                text="Zarejestruj się" 
+                text="Zarejestruj się"
             />
         </form>
     )
