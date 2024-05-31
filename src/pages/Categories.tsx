@@ -35,7 +35,7 @@ const Categories = () => {
                     subcategories.map((subcategory) => 
                         <CategoryCard
                             href={`/produkty-w-kategoriach/${subcategory.slug}`}
-                            image={subcategory.image}
+                            imageSrc={subcategory.image}
                             alt={subcategory.name}
                             title={subcategory.name}
                             width={140}
