@@ -11,16 +11,16 @@ interface ButtonProps {
     onClick?: () => void
 }
 
-const Button = ({ className, type, text, href, onClick }: ButtonProps) => {
+const Button = ({ className, type, text, href, onClick, ...props }: ButtonProps) => {
         if (href) {
             return (
                 <Link to={href} onClick={onClick}>
-                    <button className={className} type={type}>{text}</button>
+                    <button className={className} type={type} {...props}>{text}</button>
                 </Link>
             )
         } else {
             return (
-                <button className={className} type={type} onClick={onClick}>{text}</button>
+                <button className={className} type={type} onClick={onClick} {...props}>{text}</button>
             )
         }
 }
