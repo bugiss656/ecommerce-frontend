@@ -26,7 +26,11 @@ const Alert = ({ type, message, onClick }: AlertProps) => {
         <div className={`rounded-md my-3 p-3 ${alertColor}`} role="alert">
             <div className="flex flex-row justify-between items-center">
                 <div className="mx-3">{message}</div>
-                <IoMdClose className="text-2xl hover:cursor-pointer" onClick={onClick} />
+                <IoMdClose 
+                    data-testid='close-icon'
+                    className="text-2xl hover:cursor-pointer" 
+                    onClick={onClick} 
+                />
             </div>
         </div>
     )
