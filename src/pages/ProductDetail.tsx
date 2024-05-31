@@ -13,11 +13,11 @@ import {
     selectSingleProductError, 
     selectSingleProductStatus 
 } from "../features/products/productDetailSlice"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 import Input, { InputError } from "../components/Input/Input"
 import Button from "../components/Button/Button"
 import ImageGallery from "../components/ImageGallery/ImageGallery"
-import { zodResolver } from "@hookform/resolvers/zod"
 
 
 const schema = z.object({
