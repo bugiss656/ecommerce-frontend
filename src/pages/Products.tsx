@@ -258,7 +258,7 @@ const Products = () => {
 
     useEffect(() => {
         addActiveFilters()
-        setSelectInputOption(searchParams.get('sorting') as string)
+        if (searchParams.get('sorting') !== null) setSelectInputOption(searchParams.get('sorting') as string)
     }, [])
 
     return (
