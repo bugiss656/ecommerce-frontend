@@ -30,7 +30,7 @@ export const ModalBody = ({ children }: ModalBodyProps) => {
 
 export const Modal = ({ children }: ModalProps) => {
     return (
-        <div className="modal flex flex-col items-center rounded-lg z-[999] w-[400px] h-auto max-w-[400px] bg-white">
+        <div data-testid="modal" className="modal flex flex-col items-center rounded-lg z-[999] w-[400px] h-auto max-w-[400px] bg-white">
             {children}
         </div>
     )
