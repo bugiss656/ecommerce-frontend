@@ -23,3 +23,24 @@ This project is an example of frontend application for e-commerce system which i
 - Vitest
 - React Testing Library
 - Jest DOM
+
+### Installation
+1. Clone the repository:
+   `git clone https://github.com/bugiss656/ecommerce-frontend.git
+    cd ecommerce-frontend`
+2. Install dependencies:
+   `npm install`
+
+### Usage
+To start development server, run:
+`npm run dev`
+
+Build the project for production:
+`npm run build`
+
+Preview the production build:
+`npm run preview`
+
+
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
